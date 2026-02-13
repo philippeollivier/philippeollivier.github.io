@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTransition = {
+  forwards: {
+    old: [{ name: 'pageHold', duration: '0.6s' }],
+    new: [{ name: 'pageFadeIn', duration: '0.6s', easing: 'ease-out' }],
+  },
+  backwards: {
+    old: [{ name: 'pageHold', duration: '0.6s' }],
+    new: [{ name: 'pageFadeIn', duration: '0.6s', easing: 'ease-out' }],
+  },
+};
+---
+
+<BaseLayout title="Gallery — Philippe Ollivier">
+  <div transition:animate={pageTransition} class="min-h-screen p-8 overflow-auto">
+    <a href="/" class="text-sol-base01 hover:text-black font-alte text-sm uppercase tracking-wider mb-8 inline-block">&larr; Back</a>
+    <h1 class="text-4xl font-bold text-black font-redaction italic mb-12" style="-webkit-font-smoothing: none;">Gallery</h1>
+
+    <!-- Fashion brand style masonry grid -->
+    <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+      <div class="break-inside-avoid bg-sol-base2 aspect-[3/4] flex items-center justify-center text-sol-base1 text-sm font-alte uppercase">Image 1</div>
+      <div class="break-inside-avoid bg-sol-base2 aspect-square flex items-center justify-center text-sol-base1 text-sm font-alte uppercase">Image 2</div>
+      <div class="break-inside-avoid bg-sol-base2 aspect-[2/3] flex items-center justify-center text-sol-base1 text-sm font-alte uppercase">Image 3</div>
+      <div class="break-inside-avoid bg-sol-base2 aspect-[4/5] flex items-center justify-center text-sol-base1 text-sm font-alte uppercase">Image 4</div>
+      <div class="break-inside-avoid bg-sol-base2 aspect-[3/2] flex items-center justify-center text-sol-base1 text-sm font-alte uppercase">Image 5</div>
+      <div class="break-inside-avoid bg-sol-base2 aspect-[2/3] flex items-center justify-center text-sol-base1 text-sm font-alte uppercase">Image 6</div>
+      <div class="break-inside-avoid bg-sol-base2 aspect-square flex items-center justify-center text-sol-base1 text-sm font-alte uppercase">Image 7</div>
+      <div class="break-inside-avoid bg-sol-base2 aspect-[3/4] flex items-center justify-center text-sol-base1 text-sm font-alte uppercase">Image 8</div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  body { overflow: auto !important; }
+</style>

@@ -1,28 +1,308 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const buttons = ['Home', 'Gallery', 'Other'];
+const pageTransition = {
+  forwards: {
+    old: [{ name: 'pageHold', duration: '0.6s' }],
+    new: [{ name: 'pageFadeIn', duration: '0.6s', easing: 'ease-out' }],
+  },
+  backwards: {
+    old: [{ name: 'pageHold', duration: '0.6s' }],
+    new: [{ name: 'pageFadeIn', duration: '0.6s', easing: 'ease-out' }],
+  },
+};
 ---
 
 <BaseLayout title="Philippe Ollivier">
-  <!-- Buttons: centered at 20% viewport, vertically centered -->
-  <nav class="fixed top-1/2 -translate-y-1/2 flex flex-col gap-[20px]" style="left: 20%; transform: translate(-50%, -50%);">
-    {buttons.map((label) => (
-      <button
-        class="w-[100px] h-[40px] border border-sol-base01 bg-transparent text-sol-base00 text-sm cursor-pointer hover:bg-sol-base2 transition-colors"
-      >
-        {label}
-      </button>
-    ))}
-  </nav>
+  <div transition:animate={pageTransition}>
+  <!-- Title: sharp/pixelated, italic, Redaction 50 Bold -->
+  <header class="fixed top-8 left-1/2 z-10" style="transform: translateX(-50%);">
+    <h1
+      class="font-bold text-black font-redaction italic"
+      style="font-size: 1.875rem; transform: scale(3); transform-origin: center top; -webkit-font-smoothing: none; -moz-osx-font-smoothing: grayscale;"
+    >Philippe Ollivier</h1>
+  </header>
 
-  <!-- GIF: centered, 2x point-scaled -->
-  <main class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+  <!-- Lines canvas: behind GIF and hexagons -->
+  <canvas id="orbit-lines" class="fixed inset-0 w-full h-full" style="z-index: 1;"></canvas>
+
+  <!-- GIF: centered, 0.5x original size -->
+  <main class="fixed top-1/2 left-1/2" style="z-index: 2; transform: translate(-50%, -50%);">
     <img
       src="/images/hero.gif"
       alt=""
       class="block"
-      style="image-rendering: pixelated; transform: scale(2); transform-origin: center;"
+      style="image-rendering: pixelated; transform: scale(0.5); transform-origin: center;"
     />
   </main>
+
+  <!-- Hexagons canvas: in front of GIF, clickable -->
+  <canvas id="orbit-hexagons" class="fixed inset-0 w-full h-full" style="z-index: 3;"></canvas>
+
+  <!-- Transition overlay -->
+  <canvas id="transition-overlay" class="fixed inset-0 w-full h-full" style="z-index: 100; pointer-events: none; display: none;"></canvas>
+  </div>
 </BaseLayout>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+
+  document.addEventListener('astro:page-load', () => {
+  const linesCanvas = document.getElementById('orbit-lines') as HTMLCanvasElement;
+  if (!linesCanvas) return; // not on the home page
+
+  const hexCanvas = document.getElementById('orbit-hexagons') as HTMLCanvasElement;
+  const transCanvas = document.getElementById('transition-overlay') as HTMLCanvasElement;
+  const linesCtx = linesCanvas.getContext('2d')!;
+  const hexCtx = hexCanvas.getContext('2d')!;
+  const transCtx = transCanvas.getContext('2d')!;
+
+  function resize() {
+    linesCanvas.width = window.innerWidth;
+    linesCanvas.height = window.innerHeight;
+    hexCanvas.width = window.innerWidth;
+    hexCanvas.height = window.innerHeight;
+    transCanvas.width = window.innerWidth;
+    transCanvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const centerX = () => linesCanvas.width / 2;
+  const centerY = () => linesCanvas.height / 2;
+
+  const RADIUS = 200;
+  const HEX_SIZE = 24;
+  const INITIAL_VELOCITY = 0.06;
+  const DAMPING = 0.95;
+  const MIN_VELOCITY = 0.003;
+  const BG_COLOR = '#fdf6e3';
+
+  const destinations = ['/gallery', '/contact', '/explore'];
+  const iconSrcs = ['/images/gallery-icon.png', '/images/contact-icon.png', ''];
+  const icons: (HTMLImageElement | null)[] = [null, null, null];
+
+  // Preload icons
+  iconSrcs.forEach((src, i) => {
+    if (!src) return;
+    const img = new Image();
+    img.src = src;
+    img.onload = () => { icons[i] = img; };
+  });
+
+  interface Orbit {
+    angle: number;
+    velocity: number;
+    tiltX: number;
+    tiltY: number;
+  }
+
+  const orbits: Orbit[] = [
+    { angle: 0, velocity: INITIAL_VELOCITY, tiltX: 0.3, tiltY: 0.6 },
+    { angle: 2.09, velocity: INITIAL_VELOCITY * 1.15, tiltX: -0.5, tiltY: 0.15 },
+    { angle: 4.19, velocity: INITIAL_VELOCITY * 0.9, tiltX: 0.15, tiltY: -0.7 },
+  ];
+
+  function project3D(x: number, y: number, z: number, tiltX: number, tiltY: number) {
+    const cosX = Math.cos(tiltX), sinX = Math.sin(tiltX);
+    const cosY = Math.cos(tiltY), sinY = Math.sin(tiltY);
+    const y1 = y * cosX - z * sinX;
+    const z1 = y * sinX + z * cosX;
+    const x1 = x * cosY + z1 * sinY;
+    return { x: x1, y: y1 };
+  }
+
+  function getPosition(orbit: Orbit) {
+    const x = RADIUS * Math.cos(orbit.angle);
+    const z = RADIUS * Math.sin(orbit.angle);
+    const p = project3D(x, 0, z, orbit.tiltX, orbit.tiltY);
+    return { x: centerX() + p.x, y: centerY() + p.y };
+  }
+
+  function hexPath(ctx: CanvasRenderingContext2D, cx: number, cy: number, size: number) {
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI / 3) * i - Math.PI / 2;
+      const px = Math.round(cx + size * Math.cos(a));
+      const py = Math.round(cy + size * Math.sin(a));
+      if (i === 0) ctx.moveTo(px + 0.5, py + 0.5);
+      else ctx.lineTo(px + 0.5, py + 0.5);
+    }
+    ctx.closePath();
+  }
+
+  function drawHexagon(ctx: CanvasRenderingContext2D, cx: number, cy: number, size: number, icon?: HTMLImageElement | null) {
+    hexPath(ctx, cx, cy, size);
+    ctx.fillStyle = BG_COLOR;
+    ctx.fill();
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Draw icon at 2x with pixelated rendering
+    if (icon) {
+      ctx.save();
+      ctx.imageSmoothingEnabled = false;
+      const drawW = icon.naturalWidth * 0.5;
+      const drawH = icon.naturalHeight * 0.5;
+      ctx.drawImage(icon, Math.round(cx - drawW / 2), Math.round(cy - drawH / 2), drawW, drawH);
+      ctx.restore();
+    }
+  }
+
+  const hexPositions: { x: number; y: number }[] = [];
+
+  function isInsideHexagon(px: number, py: number, cx: number, cy: number, size: number): boolean {
+    const dx = Math.abs(px - cx);
+    const dy = Math.abs(py - cy);
+    if (dx > size || dy > size) return false;
+    return dx + dy * (size / (size * Math.sqrt(3) / 2)) <= size * 1.1;
+  }
+
+  // Transition state
+  let transitioning = false;
+  let navigated = false;
+  let transHexX = 0;
+  let transHexY = 0;
+  let transTargetSize = 0;
+  let transStart = 0;
+  let transUrl = '';
+  const TRANS_DURATION = 1000; // ms for hexagon expand
+  const FADE_OVERLAP = 600; // ms before end to start page fade-in
+
+  function startTransition(index: number) {
+    transitioning = true;
+    navigated = false;
+    transHexX = hexPositions[index].x;
+    transHexY = hexPositions[index].y;
+    transUrl = destinations[index];
+
+    const w = transCanvas.width;
+    const h = transCanvas.height;
+    transTargetSize = Math.max(
+      Math.hypot(transHexX, transHexY),
+      Math.hypot(w - transHexX, transHexY),
+      Math.hypot(transHexX, h - transHexY),
+      Math.hypot(w - transHexX, h - transHexY)
+    ) + 100;
+
+    transCanvas.style.display = 'block';
+    transStart = performance.now();
+  }
+
+  function animateTransition() {
+    if (!transitioning) return;
+
+    const elapsed = performance.now() - transStart;
+    const progress = Math.min(elapsed / TRANS_DURATION, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+
+    const currentSize = HEX_SIZE + (transTargetSize - HEX_SIZE) * eased;
+
+    transCtx.clearRect(0, 0, transCanvas.width, transCanvas.height);
+    hexPath(transCtx, transHexX, transHexY, currentSize);
+    transCtx.fillStyle = BG_COLOR;
+    transCtx.fill();
+    transCtx.strokeStyle = 'black';
+    transCtx.lineWidth = 1;
+    transCtx.stroke();
+
+    // Trigger navigation 300ms before expand finishes (hexagon is ~97% expanded)
+    if (elapsed >= TRANS_DURATION - FADE_OVERLAP && !navigated) {
+      navigated = true;
+      navigate(transUrl);
+    }
+
+    if (progress < 1) {
+      requestAnimationFrame(animateTransition);
+    }
+  }
+
+  function animate() {
+    if (transitioning) return;
+
+    const cx = centerX();
+    const cy = centerY();
+
+    linesCtx.clearRect(0, 0, linesCanvas.width, linesCanvas.height);
+    hexCtx.clearRect(0, 0, hexCanvas.width, hexCanvas.height);
+
+    hexPositions.length = 0;
+    for (let i = 0; i < orbits.length; i++) {
+      const orbit = orbits[i];
+      const pos = getPosition(orbit);
+      hexPositions.push(pos);
+
+      linesCtx.beginPath();
+      linesCtx.moveTo(Math.round(cx) + 0.5, Math.round(cy) + 0.5);
+      linesCtx.lineTo(Math.round(pos.x) + 0.5, Math.round(pos.y) + 0.5);
+      linesCtx.strokeStyle = 'black';
+      linesCtx.lineWidth = 1;
+      linesCtx.stroke();
+
+      drawHexagon(hexCtx, pos.x, pos.y, HEX_SIZE, icons[i]);
+    }
+
+    for (const orbit of orbits) {
+      orbit.angle += orbit.velocity;
+      orbit.velocity = Math.max(MIN_VELOCITY, orbit.velocity * DAMPING);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  // Click handling
+  hexCanvas.addEventListener('click', (e) => {
+    if (transitioning) return;
+    const rect = hexCanvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    for (let i = 0; i < hexPositions.length; i++) {
+      if (isInsideHexagon(mx, my, hexPositions[i].x, hexPositions[i].y, HEX_SIZE)) {
+        startTransition(i);
+        requestAnimationFrame(animateTransition);
+        break;
+      }
+    }
+  });
+
+  // Cursor style on hover
+  hexCanvas.addEventListener('mousemove', (e) => {
+    if (transitioning) return;
+    const rect = hexCanvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    let hovering = false;
+    for (const pos of hexPositions) {
+      if (isInsideHexagon(mx, my, pos.x, pos.y, HEX_SIZE)) {
+        hovering = true;
+        break;
+      }
+    }
+    hexCanvas.style.cursor = hovering ? 'pointer' : 'default';
+  });
+
+  // Prefetch destination pages after homepage has loaded
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+      for (const url of destinations) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    });
+  } else {
+    setTimeout(() => {
+      for (const url of destinations) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    }, 100);
+  }
+
+  animate();
+  }); // end astro:page-load
+</script>

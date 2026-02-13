@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTransition = {
+  forwards: {
+    old: [{ name: 'pageHold', duration: '0.6s' }],
+    new: [{ name: 'pageFadeIn', duration: '0.6s', easing: 'ease-out' }],
+  },
+  backwards: {
+    old: [{ name: 'pageHold', duration: '0.6s' }],
+    new: [{ name: 'pageFadeIn', duration: '0.6s', easing: 'ease-out' }],
+  },
+};
+---
+
+<BaseLayout title="Contact — Philippe Ollivier">
+  <div transition:animate={pageTransition} class="min-h-screen flex flex-col items-center justify-center p-8">
+    <a href="/" class="text-sol-base01 hover:text-black font-alte text-sm uppercase tracking-wider mb-8 self-start">&larr; Back</a>
+    <h1 class="text-4xl font-bold text-black font-redaction italic mb-12" style="-webkit-font-smoothing: none;">Contact</h1>
+    <p class="text-sol-base00 font-alte text-lg">Details coming soon.</p>
+  </div>
+</BaseLayout>

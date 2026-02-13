@@ -1,5 +1,41 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Alte Haas Grotesk';
+  src: url('/fonts/AlteHaasGroteskRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alte Haas Grotesk';
+  src: url('/fonts/AlteHaasGroteskBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Redaction 50';
+  src: url('/fonts/redaction-50-latin-700-normal.woff2') format('woff2'),
+       url('/fonts/redaction-50-latin-700-normal.woff') format('woff'),
+       url('/fonts/redaction-50-latin-700-normal.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Redaction 50';
+  src: url('/fonts/redaction-50-latin-700-italic.woff2') format('woff2'),
+       url('/fonts/redaction-50-latin-700-italic.woff') format('woff'),
+       url('/fonts/redaction-50-latin-700-italic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 @theme {
   --color-sol-base03: #002b36;
   --color-sol-base02: #073642;
@@ -17,4 +53,6 @@
   --color-sol-blue: #268bd2;
   --color-sol-cyan: #2aa198;
   --color-sol-green: #859900;
+  --font-alte: 'Alte Haas Grotesk', sans-serif;
+  --font-redaction: 'Redaction 50', serif;
 }
