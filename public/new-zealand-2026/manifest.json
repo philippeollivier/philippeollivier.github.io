@@ -1,0 +1,18 @@
+{
+  "name": "NZ 2026 Trip",
+  "short_name": "NZ 2026",
+  "description": "New Zealand trip itinerary — Apr 27 to May 4, 2026",
+  "start_url": "/new-zealand-2026/",
+  "scope": "/new-zealand-2026/",
+  "display": "standalone",
+  "background_color": "#f7f6f3",
+  "theme_color": "#0b3954",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -24,6 +24,7 @@ interface Day {
   date: string;
   title: string;
   subtitle?: string;
+  noSignal?: boolean;
   items: TimelineItem[];
 }
 
@@ -50,6 +51,7 @@ interface Phrase {
 interface CostItem {
   label: string;
   amount: string;
+  usd: string;
 }
 
 const days: Day[] = [
@@ -80,7 +82,7 @@ const days: Day[] = [
   {
     id: 'apr29', label: 'Apr 29', dayNum: '03',
     date: 'Tuesday, April 29', title: 'Routeburn Track: Day 1',
-    subtitle: '7.5 km hike to first campsite',
+    subtitle: '7.5 km hike to first campsite', noSignal: true,
     items: [
       { type: 'activity', time: 'Morning', title: 'Pick up camping gear', detail: 'Tent, sleeping bag, mat, cookware', cost: '$50–100 NZD / day', mapsQuery: 'Small Planet Sports Queenstown', link: 'https://smallplanetsports.com/rentals/camp-and-hike/' },
       { type: 'transport', time: '11:15 AM – 1:00 PM', title: 'Bus to Routeburn Shelter', detail: 'From Queenstown', cost: '$155 NZD / person (return included)', mapsQuery: 'Routeburn Shelter Glenorchy New Zealand', link: 'https://www.tracknet.net/' },
@@ -91,7 +93,7 @@ const days: Day[] = [
   {
     id: 'apr30', label: 'Apr 30', dayNum: '04',
     date: 'Wednesday, April 30', title: 'Routeburn Track: Day 2',
-    subtitle: '13.5 km — the longest day on the track',
+    subtitle: '13.5 km — the longest day on the track', noSignal: true,
     items: [
       { type: 'activity', time: 'Early AM', title: 'Break camp & breakfast', detail: 'Pack up and fuel up — big day ahead' },
       { type: 'hike', time: '~8:00 AM – 2:00 PM', title: 'Hike to Lake Mackenzie', detail: 'Harris Saddle views, alpine passes · 5–6 hrs', distance: '13.5 km', mapsQuery: 'Lake Mackenzie Hut Routeburn Track New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/otago/routeburn-track-routeburn-falls-hut-to-lake-mackenzie-hut' },
@@ -102,7 +104,7 @@ const days: Day[] = [
   {
     id: 'may1', label: 'May 1', dayNum: '05',
     date: 'Thursday, May 1', title: 'Routeburn Exit Day',
-    subtitle: '12 km hike out, then buses back to Queenstown',
+    subtitle: '12 km hike out, then buses back to Queenstown', noSignal: true,
     items: [
       { type: 'activity', time: 'Morning', title: 'Break camp & breakfast', detail: 'Last morning on the track' },
       { type: 'hike', time: '~9:00 AM – 2:30 PM', title: 'Hike to The Divide', detail: 'Mostly downhill · 4–5.5 hrs', distance: '12 km', mapsQuery: 'The Divide Milford Road Fiordland New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/southland/routeburn-track-lake-mackenzie-hut-to-the-divide' },
@@ -181,12 +183,12 @@ const phrases: Phrase[] = [
 ];
 
 const costs: CostItem[] = [
-  { label: 'Flights (AKL ↔ ZQN)', amount: '$300' },
-  { label: 'Lylo Pod Hostel', amount: '$62' },
-  { label: 'Routeburn Bus (return)', amount: '$155' },
-  { label: 'Camping Gear (~4 days)', amount: '$200–400' },
-  { label: 'Skydiving', amount: '$359' },
-  { label: 'Bike & Wine Tour', amount: '$121' },
+  { label: 'Flights (AKL ↔ ZQN)', amount: '$300', usd: '~$180' },
+  { label: 'Lylo Pod Hostel', amount: '$62', usd: '~$37' },
+  { label: 'Routeburn Bus (return)', amount: '$155', usd: '~$93' },
+  { label: 'Camping Gear (~4 days)', amount: '$200–400', usd: '~$120–240' },
+  { label: 'Skydiving', amount: '$359', usd: '~$215' },
+  { label: 'Bike & Wine Tour', amount: '$121', usd: '~$73' },
 ];
 
 const typeIcons: Record<ItemType, string> = {
@@ -223,6 +225,7 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>NZ 2026 | Apr 27 – May 4</title>
+  <link rel="manifest" href="/new-zealand-2026/manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,700;1,9..144,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -907,6 +910,77 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
       margin-top: 0.5rem;
     }
 
+    /* ===== NO-SIGNAL BANNER ===== */
+    .no-signal-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 0.875rem;
+      background: rgba(201, 152, 90, 0.1);
+      border: 1px solid rgba(201, 152, 90, 0.25);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #8b6914;
+      margin-bottom: 1rem;
+    }
+
+    .no-signal-banner svg { flex-shrink: 0; }
+
+    /* ===== UP NEXT HIGHLIGHT ===== */
+    .event-card.up-next {
+      border-color: var(--pounamu);
+      box-shadow: 0 0 0 2px rgba(58, 135, 100, 0.15), var(--shadow-md);
+      position: relative;
+    }
+
+    .up-next-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      position: absolute;
+      top: -0.625rem;
+      right: 0.75rem;
+      padding: 0.125rem 0.5rem;
+      background: var(--pounamu);
+      color: white;
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ===== COLLAPSIBLE PAST DAYS ===== */
+    .day-section.collapsed .timeline {
+      display: none;
+    }
+
+    .day-section.collapsed .day-header {
+      cursor: pointer;
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom-color: transparent;
+      opacity: 0.5;
+      transition: opacity 0.2s ease;
+    }
+
+    .day-section.collapsed .day-header:hover {
+      opacity: 0.75;
+    }
+
+    .day-expand-hint {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--stone-400);
+      font-weight: 500;
+      margin-top: 0.25rem;
+    }
+
+    .day-section.collapsed .day-expand-hint {
+      display: block;
+    }
+
     /* ===== FOOTER ===== */
     .footer {
       text-align: center;
@@ -1022,13 +1096,20 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
   <!-- Main Content -->
   <main class="content">
     {days.map((day) => (
-      <section class="day-section" id={day.id}>
+      <section class="day-section" id={day.id} data-date={day.id}>
         <div class="day-header">
           <span class="day-watermark">{day.dayNum}</span>
           <div class="day-date">{day.date}</div>
           <h2 class="day-title">{day.title}</h2>
           {day.subtitle && <p class="day-subtitle">{day.subtitle}</p>}
+          <p class="day-expand-hint">Tap to expand</p>
         </div>
+        {day.noSignal && (
+          <div class="no-signal-banner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.56 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            <span>No cell service on the track — download offline maps beforehand</span>
+          </div>
+        )}
         <div class="timeline">
           {day.items.map((item) => (
             <div class="timeline-event" style={`--dot-color: var(--cat-${item.type}); --accent-color: var(--cat-${item.type}); --badge-color: var(--cat-${item.type});`}>
@@ -1144,20 +1225,31 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
 
       <!-- Budget -->
       <div class="ref-group">
-        <h3 class="ref-group-title">Trip Budget (per person, NZD)</h3>
+        <h3 class="ref-group-title">Trip Budget (per person)</h3>
+        <p style="font-size: 0.8125rem; color: var(--stone-400); margin-bottom: 0.75rem;">1 NZD ≈ 0.60 USD</p>
         <table class="budget-table">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--stone-200);">
+              <td style="font-weight: 600; color: var(--stone-900); font-size: 0.8125rem;"></td>
+              <td style="text-align: right; font-weight: 600; color: var(--stone-900); font-size: 0.75rem;">NZD</td>
+              <td style="text-align: right; font-weight: 600; color: var(--stone-400); font-size: 0.75rem;">USD</td>
+            </tr>
+          </thead>
+          <tbody>
           {costs.map((c) => (
             <tr>
               <td>{c.label}</td>
               <td>{c.amount}</td>
+              <td style="text-align: right; color: var(--stone-400); font-weight: 500;">{c.usd}</td>
             </tr>
           ))}
+          </tbody>
         </table>
         <div class="budget-total">
           <span class="budget-total-label">Estimated Total</span>
-          <span class="budget-total-amount">~$1,200–1,400</span>
+          <span class="budget-total-amount">~$1,200–1,400 <span style="font-size: 0.8125rem; font-weight: 500; color: var(--stone-500);">NZD</span></span>
         </div>
-        <p class="budget-note">Excludes May 1 accommodation (TBD) and meals</p>
+        <p class="budget-note">≈ $720–840 USD · Excludes May 1 accommodation (TBD) and meals</p>
       </div>
     </section>
   </main>
@@ -1170,38 +1262,142 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
 
   <!-- Scripts -->
   <script>
+    // === Date helpers (NZ timezone) ===
+    var DAY_IDS = ['apr27','apr28','apr29','apr30','may1','may2','may3','may4'];
+    var DAY_DATES = [27,28,29,30,1,2,3,4]; // day of month
+    var DAY_MONTHS = [3,3,3,3,4,4,4,4]; // 0-indexed months (3=Apr, 4=May)
+
+    function getNZDate() {
+      // Get current time in NZ (UTC+12)
+      var now = new Date();
+      var nz = new Date(now.getTime() + (now.getTimezoneOffset() + 720) * 60000);
+      return nz;
+    }
+
+    function getTripDayIndex() {
+      var nz = getNZDate();
+      var m = nz.getMonth();
+      var d = nz.getDate();
+      for (var i = 0; i < DAY_IDS.length; i++) {
+        if (m === DAY_MONTHS[i] && d === DAY_DATES[i]) return i;
+      }
+      // Before trip
+      if (m < 3 || (m === 3 && d < 27)) return -1;
+      // After trip
+      return 8;
+    }
+
     // === Trip Status ===
     (function() {
-      const statusEl = document.getElementById('status-bar');
+      var statusEl = document.getElementById('status-bar');
       if (!statusEl) return;
-      const start = new Date('2026-04-27T00:00:00+12:00');
-      const end = new Date('2026-05-04T23:59:59+12:00');
-      const now = new Date();
+      var start = new Date('2026-04-27T00:00:00+12:00');
+      var end = new Date('2026-05-04T23:59:59+12:00');
+      var now = new Date();
       if (now < start) {
-        const diff = Math.ceil((start.getTime() - now.getTime()) / 86400000);
+        var diff = Math.ceil((start.getTime() - now.getTime()) / 86400000);
         statusEl.textContent = diff === 1
           ? 'Tomorrow you fly!'
           : diff + ' days until departure';
       } else if (now <= end) {
-        const dayNum = Math.min(Math.floor((now.getTime() - start.getTime()) / 86400000) + 1, 8);
+        var dayNum = Math.min(Math.floor((now.getTime() - start.getTime()) / 86400000) + 1, 8);
         statusEl.textContent = 'Day ' + dayNum + ' of 8';
       } else {
         statusEl.textContent = 'Trip complete — what an adventure!';
       }
     })();
 
+    // === Collapsible Past Days ===
+    (function() {
+      var idx = getTripDayIndex();
+      // Only collapse if we're during or after the trip
+      if (idx <= 0) return;
+      for (var i = 0; i < Math.min(idx, DAY_IDS.length); i++) {
+        var section = document.getElementById(DAY_IDS[i]);
+        if (section) {
+          section.classList.add('collapsed');
+          // Make header clickable to expand/collapse
+          var header = section.querySelector('.day-header');
+          if (header) {
+            header.addEventListener('click', (function(sec) {
+              return function() { sec.classList.toggle('collapsed'); };
+            })(section));
+          }
+        }
+      }
+    })();
+
+    // === Auto-scroll to Today ===
+    (function() {
+      var idx = getTripDayIndex();
+      if (idx >= 0 && idx < DAY_IDS.length) {
+        // Delay slightly so layout is settled
+        setTimeout(function() {
+          var target = document.getElementById(DAY_IDS[idx]);
+          if (target) target.scrollIntoView({ behavior: 'auto' });
+        }, 100);
+      }
+    })();
+
+    // === Up Next Highlight ===
+    (function() {
+      var idx = getTripDayIndex();
+      if (idx < 0 || idx >= DAY_IDS.length) return;
+      var section = document.getElementById(DAY_IDS[idx]);
+      if (!section) return;
+      // Find the first event card in today's section
+      var cards = section.querySelectorAll('.event-card');
+      var nz = getNZDate();
+      var hours = nz.getHours();
+      var found = false;
+
+      for (var i = 0; i < cards.length; i++) {
+        var timeEl = cards[i].closest('.timeline-event')?.querySelector('.event-time');
+        if (!timeEl) continue;
+        var text = timeEl.textContent.trim();
+        // Parse start hour from time text
+        var match = text.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+        if (match) {
+          var h = parseInt(match[1]);
+          var ampm = match[3].toUpperCase();
+          if (ampm === 'PM' && h !== 12) h += 12;
+          if (ampm === 'AM' && h === 12) h = 0;
+          if (h >= hours) {
+            cards[i].classList.add('up-next');
+            var label = document.createElement('span');
+            label.className = 'up-next-label';
+            label.textContent = 'Up next';
+            cards[i].appendChild(label);
+            found = true;
+            break;
+          }
+        }
+      }
+      // If no future timed event found, highlight the first card
+      if (!found && cards.length > 0) {
+        cards[0].classList.add('up-next');
+        var label = document.createElement('span');
+        label.className = 'up-next-label';
+        label.textContent = 'Up next';
+        cards[0].appendChild(label);
+      }
+    })();
+
     // === Navigation ===
     (function() {
-      const pills = document.querySelectorAll('.nav-pill');
-      const sections = [];
-      const navScroll = document.getElementById('nav-scroll');
+      var pills = document.querySelectorAll('.nav-pill');
+      var sections = [];
 
       pills.forEach(function(pill) {
-        const targetId = pill.getAttribute('data-target');
-        const target = document.getElementById(targetId);
+        var targetId = pill.getAttribute('data-target');
+        var target = document.getElementById(targetId);
         if (target) sections.push({ id: targetId, el: target, pill: pill });
 
         pill.addEventListener('click', function() {
+          // Expand section if collapsed
+          if (target && target.classList.contains('collapsed')) {
+            target.classList.remove('collapsed');
+          }
           if (target) {
             target.scrollIntoView({ behavior: 'smooth' });
           }
@@ -1285,6 +1481,11 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
         });
       });
     })();
+
+    // === Register Service Worker ===
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/new-zealand-2026/sw.js').catch(function() {});
+    }
   </script>
 </body>
 </html>
