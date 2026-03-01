@@ -11,8 +11,10 @@ interface TimelineItem {
   title: string;
   detail?: string;
   cost?: string;
+  distance?: string;
   mapsQuery?: string;
   link?: string;
+  flightCodes?: string[];
 }
 
 interface Day {
@@ -56,11 +58,11 @@ const days: Day[] = [
     date: 'Sunday, April 27', title: 'Arrival in Auckland',
     subtitle: 'Everyone lands — regroup, rest, explore the city',
     items: [
-      { type: 'flight', time: '5:45 AM', title: 'Adriene Tien arrives', detail: 'Flight NZ4723', mapsQuery: 'Auckland Airport AKL New Zealand' },
-      { type: 'flight', time: '6:50 AM', title: 'Kevin Xiang arrives', detail: 'Flight DL0065', mapsQuery: 'Auckland Airport AKL New Zealand' },
-      { type: 'flight', time: '7:10 AM', title: 'Yang, David & Evan arrive', detail: 'Flights UA917 / NZ9817 / TBD', mapsQuery: 'Auckland Airport AKL New Zealand' },
-      { type: 'flight', time: '7:45 AM', title: 'Philippe & Erica arrive', detail: 'Flight NZ1', mapsQuery: 'Auckland Airport AKL New Zealand' },
-      { type: 'flight', time: '5:15 PM', title: 'Matthew Carrie arrives', detail: 'Flight TBD', mapsQuery: 'Auckland Airport AKL New Zealand' },
+      { type: 'flight', time: '5:45 AM', title: 'Adriene Tien arrives', flightCodes: ['NZ4723'] },
+      { type: 'flight', time: '6:50 AM', title: 'Kevin Xiang arrives', flightCodes: ['DL0065'] },
+      { type: 'flight', time: '7:10 AM', title: 'Yang, David & Evan arrive', flightCodes: ['UA917', 'NZ9817'] },
+      { type: 'flight', time: '7:45 AM', title: 'Philippe & Erica arrive', flightCodes: ['NZ1'] },
+      { type: 'flight', time: '5:15 PM', title: 'Matthew Carrie arrives', detail: 'Flight TBD' },
       { type: 'meal', time: 'Evening', title: 'Group dinner in Auckland', detail: 'Regroup after travel, explore the city' },
       { type: 'info', title: 'Rest day — no early wake-ups planned' },
     ],
@@ -72,7 +74,7 @@ const days: Day[] = [
     items: [
       { type: 'activity', time: 'Morning', title: 'Drive to Piha Beach', detail: 'Famous black sand beach, west coast of Auckland', mapsQuery: 'Piha Beach Auckland New Zealand' },
       { type: 'meal', time: 'Afternoon', title: 'Lunch at Piha', mapsQuery: 'Piha Beach Auckland New Zealand' },
-      { type: 'flight', time: 'Evening', title: 'Fly to Queenstown', detail: 'Auckland (AKL) → Queenstown (ZQN)', cost: '$150 NZD / person', mapsQuery: 'Queenstown Airport ZQN New Zealand' },
+      { type: 'flight', time: 'Evening', title: 'Fly to Queenstown', detail: 'Auckland (AKL) → Queenstown (ZQN)', cost: '$150 NZD / person' },
       { type: 'hotel', time: 'Night', title: 'Lylo Pod Hostel', detail: '36 Man Street, Queenstown 9300', cost: '$62 NZD / person', mapsQuery: 'Lylo Queenstown 36 Man Street Queenstown', link: 'https://www.lylo.com/queenstown/rooms-pods/pods-room/' },
     ],
   },
@@ -82,8 +84,8 @@ const days: Day[] = [
     subtitle: '7.5 km hike to first campsite',
     items: [
       { type: 'activity', time: 'Morning', title: 'Pick up camping gear', detail: 'Tent, sleeping bag, mat, cookware', cost: '$50–100 NZD / day', mapsQuery: 'Small Planet Sports Queenstown', link: 'https://smallplanetsports.com/rentals/camp-and-hike/' },
-      { type: 'transport', time: '11:15 AM', title: 'Bus to Routeburn Shelter', detail: '1 hr 45 min ride from Queenstown', cost: '$155 NZD / person (return included)', mapsQuery: 'Routeburn Shelter Glenorchy New Zealand', link: 'https://www.tracknet.net/' },
-      { type: 'hike', time: '~1:00 PM', title: 'Hike to Routeburn Flats', detail: '7.5 km · 1.5–2.5 hrs · Moderate terrain', mapsQuery: 'Routeburn Flats Campsite New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/otago/routeburn-shelter-to-routeburn-flats-hut' },
+      { type: 'transport', time: '11:15 AM – 1:00 PM', title: 'Bus to Routeburn Shelter', detail: 'From Queenstown', cost: '$155 NZD / person (return included)', mapsQuery: 'Routeburn Shelter Glenorchy New Zealand', link: 'https://www.tracknet.net/' },
+      { type: 'hike', time: '~1:00 – 3:30 PM', title: 'Hike to Routeburn Flats', detail: 'Moderate terrain · 1.5–2.5 hrs', distance: '7.5 km', mapsQuery: 'Routeburn Flats Campsite New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/otago/routeburn-shelter-to-routeburn-flats-hut' },
       { type: 'activity', time: 'Evening', title: 'Camp at Routeburn Flats', detail: 'Set up camp, cook dinner, rest for Day 2' },
     ],
   },
@@ -93,7 +95,7 @@ const days: Day[] = [
     subtitle: '13.5 km — the longest day on the track',
     items: [
       { type: 'activity', time: 'Early AM', title: 'Break camp & breakfast', detail: 'Pack up and fuel up — big day ahead' },
-      { type: 'hike', time: '~8:00 AM', title: 'Hike to Lake Mackenzie', detail: '13.5 km · 5–6 hrs · Harris Saddle views, alpine passes', mapsQuery: 'Lake Mackenzie Hut Routeburn Track New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/otago/routeburn-track-routeburn-falls-hut-to-lake-mackenzie-hut' },
+      { type: 'hike', time: '~8:00 AM – 2:00 PM', title: 'Hike to Lake Mackenzie', detail: 'Harris Saddle views, alpine passes · 5–6 hrs', distance: '13.5 km', mapsQuery: 'Lake Mackenzie Hut Routeburn Track New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/otago/routeburn-track-routeburn-falls-hut-to-lake-mackenzie-hut' },
       { type: 'meal', time: 'Midday', title: 'Lunch on the trail', detail: 'Scenic break near Harris Saddle' },
       { type: 'activity', time: 'Evening', title: 'Camp at Lake Mackenzie', detail: 'Recover from the longest day — you earned it' },
     ],
@@ -104,9 +106,9 @@ const days: Day[] = [
     subtitle: '12 km hike out, then buses back to Queenstown',
     items: [
       { type: 'activity', time: 'Morning', title: 'Break camp & breakfast', detail: 'Last morning on the track' },
-      { type: 'hike', time: '~9:00 AM', title: 'Hike to The Divide', detail: '12 km · 4–5.5 hrs · Mostly downhill', mapsQuery: 'The Divide Milford Road Fiordland New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/southland/routeburn-track-lake-mackenzie-hut-to-the-divide' },
-      { type: 'transport', time: '3:15 PM', title: 'Bus: The Divide → Te Anau', detail: '1 hr 15 min', mapsQuery: 'Te Anau Southland New Zealand' },
-      { type: 'transport', time: '5:00 PM', title: 'Bus: Te Anau → Queenstown', detail: '2 hrs 30 min', mapsQuery: 'Queenstown New Zealand' },
+      { type: 'hike', time: '~9:00 AM – 2:30 PM', title: 'Hike to The Divide', detail: 'Mostly downhill · 4–5.5 hrs', distance: '12 km', mapsQuery: 'The Divide Milford Road Fiordland New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/southland/routeburn-track-lake-mackenzie-hut-to-the-divide' },
+      { type: 'transport', time: '3:15 – 4:30 PM', title: 'Bus: The Divide → Te Anau', mapsQuery: 'Te Anau Southland New Zealand' },
+      { type: 'transport', time: '5:00 – 7:30 PM', title: 'Bus: Te Anau → Queenstown', mapsQuery: 'Queenstown New Zealand' },
       { type: 'hotel', time: 'Evening', title: 'Queenstown accommodation', detail: 'Hostel or Airbnb — TBD', cost: 'TBD' },
     ],
   },
@@ -126,7 +128,7 @@ const days: Day[] = [
     subtitle: 'Final Queenstown adventure, then fly north',
     items: [
       { type: 'activity', time: 'Afternoon', title: 'Bike & Wine tour', detail: 'Cycle through Queenstown vineyards with tastings', cost: '$121 NZD / person', mapsQuery: 'Gibbston Valley Winery Queenstown' },
-      { type: 'flight', time: 'Evening', title: 'Fly back to Auckland', detail: 'Queenstown (ZQN) → Auckland (AKL)', cost: '$150 NZD / person', mapsQuery: 'Queenstown Airport ZQN New Zealand' },
+      { type: 'flight', time: 'Evening', title: 'Fly back to Auckland', detail: 'Queenstown (ZQN) → Auckland (AKL)', cost: '$150 NZD / person' },
       { type: 'activity', time: 'Night', title: 'Last night in Auckland', detail: 'Final dinner, city walk, last-minute shopping' },
     ],
   },
@@ -135,11 +137,11 @@ const days: Day[] = [
     date: 'Sunday, May 4', title: 'Departures',
     subtitle: 'Safe travels home, everyone',
     items: [
-      { type: 'flight', time: '1:00 PM', title: 'Kevin Xiang departs', detail: 'Flight DL0064', mapsQuery: 'Auckland Airport AKL New Zealand' },
-      { type: 'flight', time: '1:50 PM', title: 'Evan Liu & Yang Lowe depart', detail: 'Flights TBD / UA336', mapsQuery: 'Auckland Airport AKL New Zealand' },
-      { type: 'flight', time: '7:25 PM', title: 'Philippe, Erica & Matthew depart', detail: 'Flight NZ2', mapsQuery: 'Auckland Airport AKL New Zealand' },
-      { type: 'flight', time: '7:50 PM', title: 'David Song departs', detail: 'Flight NZ8', mapsQuery: 'Auckland Airport AKL New Zealand' },
-      { type: 'flight', time: '8:00 PM', title: 'Adriene Tien departs', detail: 'Flight NZ4752', mapsQuery: 'Auckland Airport AKL New Zealand' },
+      { type: 'flight', time: '1:00 PM', title: 'Kevin Xiang departs', flightCodes: ['DL0064'] },
+      { type: 'flight', time: '1:50 PM', title: 'Evan Liu & Yang Lowe depart', flightCodes: ['UA336'] },
+      { type: 'flight', time: '7:25 PM', title: 'Philippe, Erica & Matthew depart', flightCodes: ['NZ2'] },
+      { type: 'flight', time: '7:50 PM', title: 'David Song departs', flightCodes: ['NZ8'] },
+      { type: 'flight', time: '8:00 PM', title: 'Adriene Tien departs', flightCodes: ['NZ4752'] },
     ],
   },
 ];
@@ -595,10 +597,16 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
 
     .event-actions {
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
       margin-top: 0.75rem;
+    }
+
+    .event-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
     }
 
     .cost-pill {
@@ -608,6 +616,18 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
       padding: 0.3rem 0.7rem;
       background: rgba(201, 152, 90, 0.1);
       color: #8b6914;
+      border-radius: var(--radius-pill);
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+
+    .distance-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.3rem 0.7rem;
+      background: rgba(45, 106, 79, 0.1);
+      color: #1e6040;
       border-radius: var(--radius-pill);
       font-size: 0.8125rem;
       font-weight: 600;
@@ -636,9 +656,10 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
 
     .action-link--maps { color: #1a73e8; }
     .action-link--alltrails { color: #428813; }
+    .action-link--flight { color: #0369a1; }
     .action-link--external { color: var(--stone-500); }
 
-    .action-link--maps:hover, .action-link--alltrails:hover, .action-link--external:hover {
+    .action-link--maps:hover, .action-link--alltrails:hover, .action-link--flight:hover, .action-link--external:hover {
       text-decoration: underline;
     }
 
@@ -1020,9 +1041,20 @@ function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'externa
                   <span class="type-badge">{typeIcons[item.type]} {typeLabels[item.type]}</span>
                 </div>
                 {item.detail && <p class="event-detail">{item.detail}</p>}
-                {(item.cost || item.mapsQuery || item.link) && (
+                {(item.cost || item.distance || item.mapsQuery || item.link || item.flightCodes) && (
                   <div class="event-actions">
-                    {item.cost && <span class="cost-pill">{item.cost}</span>}
+                    {(item.cost || item.distance) && (
+                      <div class="event-pills">
+                        {item.cost && <span class="cost-pill">{item.cost}</span>}
+                        {item.distance && <span class="distance-pill">{item.distance}</span>}
+                      </div>
+                    )}
+                    {item.flightCodes && item.flightCodes.map((code) => (
+                      <a href={`https://www.google.com/search?q=${code}+flight+status`} target="_blank" rel="noopener noreferrer" class="action-link action-link--flight">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                        <span>Track {code}</span>
+                      </a>
+                    ))}
                     {item.mapsQuery && (
                       <a href={mapsUrl(item.mapsQuery)} target="_blank" rel="noopener noreferrer" class="action-link action-link--maps">
                         <svg width="16" height="16" viewBox="0 0 92.3 132.3" xmlns="http://www.w3.org/2000/svg"><path fill="#1a73e8" d="M60.2 2.2C55.8.8 51 0 46.1 0 32 0 19.3 6.4 10.8 16.5l21.8 18.3L60.2 2.2z"/><path fill="#ea4335" d="M10.8 16.5C4.1 24.5 0 34.9 0 46.1c0 8.7 1.7 15.7 4.6 22l28-33.3-21.8-18.3z"/><path fill="#4285f4" d="M46.2 28.5c9.8 0 17.7 7.9 17.7 17.7 0 4.3-1.6 8.3-4.2 11.4 0 0 13.9-16.6 27.5-32.7-5.6-10.8-15.3-19-27-22.7L32.6 34.8c3.3-3.8 8.1-6.3 13.6-6.3"/><path fill="#fbbc04" d="M46.2 63.8c-9.8 0-17.7-7.9-17.7-17.7 0-4.3 1.5-8.3 4.1-11.3l-28 33.3c4.8 10.6 12.8 19.2 21 29.9l34.1-40.5c-3.3 3.9-8.1 6.3-13.5 6.3"/><path fill="#34a853" d="M59.1 109.2c15.4-24.1 33.3-35 33.3-63.1 0-9.1-2.4-17.2-6.5-24.3L25.6 98c2.6 3.4 5.3 7.3 7.9 11.3 9.4 14.5 6.8 23.1 12.8 23.1s3.4-8.7 12.8-23.2"/></svg>
