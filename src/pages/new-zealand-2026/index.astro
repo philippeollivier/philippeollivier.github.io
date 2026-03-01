@@ -201,6 +201,16 @@ const typeLabels: Record<ItemType, string> = {
 function mapsUrl(query: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
+
+function getLinkInfo(url: string): { label: string; type: 'alltrails' | 'external' } {
+  if (url.includes('alltrails.com')) return { label: 'Open trail on AllTrails', type: 'alltrails' };
+  if (url.includes('lylo.com')) return { label: 'Book on Lylo', type: 'external' };
+  if (url.includes('tracknet.net')) return { label: 'Book on TrackNet', type: 'external' };
+  if (url.includes('smallplanetsports')) return { label: 'Rent on Small Planet Sports', type: 'external' };
+  if (url.includes('nzoneskydive')) return { label: 'Book on NZONE Skydive', type: 'external' };
+  if (url.includes('doc.govt.nz')) return { label: 'View on DOC', type: 'external' };
+  return { label: 'View details', type: 'external' };
+}
 ---
 
 <!DOCTYPE html>
@@ -603,6 +613,36 @@ function mapsUrl(query: string): string {
       font-weight: 600;
     }
 
+    .action-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      min-height: 36px;
+      transition: opacity 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      padding: 0.25rem 0;
+    }
+
+    .action-link:hover { opacity: 0.75; }
+
+    .action-link svg { flex-shrink: 0; }
+
+    .action-link--maps { color: #1a73e8; }
+    .action-link--alltrails { color: #428813; }
+    .action-link--external { color: var(--stone-500); }
+
+    .action-link--maps:hover, .action-link--alltrails:hover, .action-link--external:hover {
+      text-decoration: underline;
+    }
+
+    /* Keep .action-btn for copy button in hotel cards */
     .action-btn {
       display: inline-flex;
       align-items: center;
@@ -619,21 +659,6 @@ function mapsUrl(query: string): string {
       transition: all 0.15s ease;
       -webkit-tap-highlight-color: transparent;
     }
-
-    .maps-btn {
-      background: var(--pounamu);
-      color: white;
-    }
-
-    .maps-btn:hover { background: #2e7355; transform: translateY(-1px); }
-
-    .link-btn {
-      background: var(--stone-100);
-      color: var(--stone-600);
-      border: 1px solid var(--stone-200);
-    }
-
-    .link-btn:hover { background: var(--stone-200); color: var(--stone-900); }
 
     /* ===== QUICK REFERENCE ===== */
     .ref-section {
@@ -999,14 +1024,23 @@ function mapsUrl(query: string): string {
                   <div class="event-actions">
                     {item.cost && <span class="cost-pill">{item.cost}</span>}
                     {item.mapsQuery && (
-                      <a href={mapsUrl(item.mapsQuery)} target="_blank" rel="noopener noreferrer" class="action-btn maps-btn">
-                        <span>Maps</span>
+                      <a href={mapsUrl(item.mapsQuery)} target="_blank" rel="noopener noreferrer" class="action-link action-link--maps">
+                        <svg width="16" height="16" viewBox="0 0 92.3 132.3" xmlns="http://www.w3.org/2000/svg"><path fill="#1a73e8" d="M60.2 2.2C55.8.8 51 0 46.1 0 32 0 19.3 6.4 10.8 16.5l21.8 18.3L60.2 2.2z"/><path fill="#ea4335" d="M10.8 16.5C4.1 24.5 0 34.9 0 46.1c0 8.7 1.7 15.7 4.6 22l28-33.3-21.8-18.3z"/><path fill="#4285f4" d="M46.2 28.5c9.8 0 17.7 7.9 17.7 17.7 0 4.3-1.6 8.3-4.2 11.4 0 0 13.9-16.6 27.5-32.7-5.6-10.8-15.3-19-27-22.7L32.6 34.8c3.3-3.8 8.1-6.3 13.6-6.3"/><path fill="#fbbc04" d="M46.2 63.8c-9.8 0-17.7-7.9-17.7-17.7 0-4.3 1.5-8.3 4.1-11.3l-28 33.3c4.8 10.6 12.8 19.2 21 29.9l34.1-40.5c-3.3 3.9-8.1 6.3-13.5 6.3"/><path fill="#34a853" d="M59.1 109.2c15.4-24.1 33.3-35 33.3-63.1 0-9.1-2.4-17.2-6.5-24.3L25.6 98c2.6 3.4 5.3 7.3 7.9 11.3 9.4 14.5 6.8 23.1 12.8 23.1s3.4-8.7 12.8-23.2"/></svg>
+                        <span>Open in Google Maps</span>
                       </a>
                     )}
                     {item.link && (
-                      <a href={item.link} target="_blank" rel="noopener noreferrer" class="action-btn link-btn">
-                        <span>Details</span>
-                      </a>
+                      getLinkInfo(item.link).type === 'alltrails' ? (
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" class="action-link action-link--alltrails">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="#428813" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 3.5L7 9.5l2.5 3.5-1.5 2C6.5 12.5 4 9 4 9L0 16h10l2-3 2 3h10l-4-7-3.5 5-2.5-3.5 3.5-5L14 0l-3.5 3.5z" transform="translate(0 4) scale(1)"/></svg>
+                          <span>{getLinkInfo(item.link).label}</span>
+                        </a>
+                      ) : (
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" class="action-link action-link--external">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                          <span>{getLinkInfo(item.link).label}</span>
+                        </a>
+                      )
                     )}
                   </div>
                 )}
@@ -1035,12 +1069,14 @@ function mapsUrl(query: string): string {
                   Copy Address
                 </button>
               )}
-              <a href={mapsUrl(hotel.mapsQuery)} target="_blank" rel="noopener noreferrer" class="action-btn maps-btn">
-                Maps
+              <a href={mapsUrl(hotel.mapsQuery)} target="_blank" rel="noopener noreferrer" class="action-link action-link--maps">
+                <svg width="16" height="16" viewBox="0 0 92.3 132.3" xmlns="http://www.w3.org/2000/svg"><path fill="#1a73e8" d="M60.2 2.2C55.8.8 51 0 46.1 0 32 0 19.3 6.4 10.8 16.5l21.8 18.3L60.2 2.2z"/><path fill="#ea4335" d="M10.8 16.5C4.1 24.5 0 34.9 0 46.1c0 8.7 1.7 15.7 4.6 22l28-33.3-21.8-18.3z"/><path fill="#4285f4" d="M46.2 28.5c9.8 0 17.7 7.9 17.7 17.7 0 4.3-1.6 8.3-4.2 11.4 0 0 13.9-16.6 27.5-32.7-5.6-10.8-15.3-19-27-22.7L32.6 34.8c3.3-3.8 8.1-6.3 13.6-6.3"/><path fill="#fbbc04" d="M46.2 63.8c-9.8 0-17.7-7.9-17.7-17.7 0-4.3 1.5-8.3 4.1-11.3l-28 33.3c4.8 10.6 12.8 19.2 21 29.9l34.1-40.5c-3.3 3.9-8.1 6.3-13.5 6.3"/><path fill="#34a853" d="M59.1 109.2c15.4-24.1 33.3-35 33.3-63.1 0-9.1-2.4-17.2-6.5-24.3L25.6 98c2.6 3.4 5.3 7.3 7.9 11.3 9.4 14.5 6.8 23.1 12.8 23.1s3.4-8.7 12.8-23.2"/></svg>
+                <span>Open in Google Maps</span>
               </a>
               {hotel.link && (
-                <a href={hotel.link} target="_blank" rel="noopener noreferrer" class="action-btn link-btn">
-                  Website
+                <a href={hotel.link} target="_blank" rel="noopener noreferrer" class="action-link action-link--external">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  <span>{getLinkInfo(hotel.link).label}</span>
                 </a>
               )}
             </div>
