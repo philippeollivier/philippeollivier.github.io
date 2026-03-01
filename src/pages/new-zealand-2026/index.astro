@@ -1,8 +1,9 @@
 ---
-// NZ Trip Travel Page - Completely Independent Design
+// NZ Trip 2026 - Refined Travel Itinerary
+// Inspired by sophisticated design patterns from travel planning experiences
 // Apr 27 - May 4, 2026 | 8 friends, 8 days
 
-type ItemType = 'flight' | 'transport' | 'hike' | 'hotel' | 'activity' | 'meal' | 'info' | 'note';
+type ItemType = 'flight' | 'transport' | 'hike' | 'hotel' | 'activity' | 'meal' | 'info';
 
 interface TimelineItem {
   type: ItemType;
@@ -31,51 +32,13 @@ const days: Day[] = [
     title: 'Arrival in Auckland',
     subtitle: 'Multiple flights arriving throughout the day',
     items: [
-      {
-        type: 'flight',
-        time: '5:45 AM',
-        title: 'Adriene Tien arrives',
-        detail: 'Flight NZ4723',
-        mapsQuery: 'Auckland Airport, Auckland, New Zealand'
-      },
-      {
-        type: 'flight',
-        time: '6:50 AM',
-        title: 'Kevin Xiang arrives',
-        detail: 'Flight DL0065',
-        mapsQuery: 'Auckland Airport, Auckland, New Zealand'
-      },
-      {
-        type: 'flight',
-        time: '7:10 AM',
-        title: 'Yang Lowe & David Song & Evan Liu arrive',
-        detail: 'Flights UA917 / NZ9817 / TBD',
-        mapsQuery: 'Auckland Airport, Auckland, New Zealand'
-      },
-      {
-        type: 'flight',
-        time: '7:45 AM',
-        title: 'Philippe & Erica arrive',
-        detail: 'Flight NZ1',
-        mapsQuery: 'Auckland Airport, Auckland, New Zealand'
-      },
-      {
-        type: 'flight',
-        time: '5:15 PM',
-        title: 'Matthew Carrie arrives',
-        detail: 'Flight TBD',
-        mapsQuery: 'Auckland Airport, Auckland, New Zealand'
-      },
-      {
-        type: 'activity',
-        time: 'Evening',
-        title: 'Group dinner in Auckland',
-        detail: 'Regroup, rest after travel'
-      },
-      {
-        type: 'info',
-        title: 'Rest day - no early activities planned'
-      }
+      { type: 'flight', time: '5:45 AM', title: 'Adriene Tien arrives', detail: 'Flight NZ4723', mapsQuery: 'Auckland Airport, Auckland, New Zealand' },
+      { type: 'flight', time: '6:50 AM', title: 'Kevin Xiang arrives', detail: 'Flight DL0065', mapsQuery: 'Auckland Airport, Auckland, New Zealand' },
+      { type: 'flight', time: '7:10 AM', title: 'Yang Lowe & David Song & Evan Liu arrive', detail: 'Flights UA917 / NZ9817 / TBD', mapsQuery: 'Auckland Airport, Auckland, New Zealand' },
+      { type: 'flight', time: '7:45 AM', title: 'Philippe & Erica arrive', detail: 'Flight NZ1', mapsQuery: 'Auckland Airport, Auckland, New Zealand' },
+      { type: 'flight', time: '5:15 PM', title: 'Matthew Carrie arrives', detail: 'Flight TBD', mapsQuery: 'Auckland Airport, Auckland, New Zealand' },
+      { type: 'activity', time: 'Evening', title: 'Group dinner in Auckland', detail: 'Regroup, rest after travel' },
+      { type: 'info', title: 'Rest day - no early activities planned' }
     ]
   },
   {
@@ -83,37 +46,12 @@ const days: Day[] = [
     label: 'Apr 28',
     date: 'Monday, April 28',
     title: 'Piha Beach → Queenstown',
-    subtitle: 'Beach morning, fly south',
+    subtitle: 'Black sand beach, then fly south',
     items: [
-      {
-        type: 'activity',
-        time: 'Morning',
-        title: 'Drive to Piha Beach',
-        detail: 'Black sand beach, west of Auckland',
-        mapsQuery: 'Piha Beach, Auckland, New Zealand'
-      },
-      {
-        type: 'meal',
-        time: 'Afternoon',
-        title: 'Lunch at Piha'
-      },
-      {
-        type: 'flight',
-        time: 'Evening',
-        title: 'Fly to Queenstown',
-        detail: 'From Auckland (AKL) to Queenstown (ZQN)',
-        cost: '$150 NZD per person',
-        mapsQuery: 'Queenstown Airport, Queenstown, New Zealand'
-      },
-      {
-        type: 'hotel',
-        time: 'Night',
-        title: 'Lylo Pod Hostel',
-        detail: '36 Man Street, Queenstown 9300',
-        cost: '$62 NZD per person',
-        mapsQuery: 'Lylo Queenstown, 36 Man Street, Queenstown',
-        link: 'https://www.lylo.com/queenstown/rooms-pods/pods-room/'
-      }
+      { type: 'activity', time: 'Morning', title: 'Drive to Piha Beach', detail: 'Black sand beach, west of Auckland', mapsQuery: 'Piha Beach, Auckland, New Zealand' },
+      { type: 'meal', time: 'Afternoon', title: 'Lunch at Piha' },
+      { type: 'flight', time: 'Evening', title: 'Fly to Queenstown', detail: 'From Auckland (AKL) to Queenstown (ZQN)', cost: '$150 NZD per person', mapsQuery: 'Queenstown Airport, Queenstown, New Zealand' },
+      { type: 'hotel', time: 'Night', title: 'Lylo Pod Hostel', detail: '36 Man Street, Queenstown 9300', cost: '$62 NZD per person', mapsQuery: 'Lylo Queenstown, 36 Man Street, Queenstown', link: 'https://www.lylo.com/queenstown/rooms-pods/pods-room/' }
     ]
   },
   {
@@ -123,38 +61,10 @@ const days: Day[] = [
     title: 'Routeburn Track: Day 1',
     subtitle: '7.5 km to first campsite',
     items: [
-      {
-        type: 'activity',
-        time: 'Morning',
-        title: 'Pick up rental camping gear',
-        detail: 'Tent, sleeping bag, mat, cookware',
-        cost: '$50–100 NZD per day',
-        mapsQuery: 'Queenstown, New Zealand',
-        link: 'https://smallplanetsports.com/rentals/camp-and-hike/'
-      },
-      {
-        type: 'transport',
-        time: '11:15 AM',
-        title: 'Bus to Routeburn Shelter',
-        detail: 'Queenstown → The Divide',
-        cost: '$155 NZD per person (includes return)',
-        mapsQuery: 'Routeburn Shelter, Glenorchy, New Zealand',
-        link: 'https://www.tracknet.net/'
-      },
-      {
-        type: 'hike',
-        time: '~1:00 PM',
-        title: 'Hike to Routeburn Flats Campsite',
-        detail: 'Distance: 7.5 km | Duration: 1.5–2.5 hrs',
-        mapsQuery: 'Routeburn Flats Campsite, New Zealand',
-        link: 'https://www.doc.govt.nz/parks-and-recreation/places-to-go/fiordland/places/fiordland-national-park/things-to-do/tracks/routeburn-track/'
-      },
-      {
-        type: 'activity',
-        time: 'Evening',
-        title: 'Camp at Routeburn Flats',
-        detail: 'Cook dinner, rest up for Day 2'
-      }
+      { type: 'activity', time: 'Morning', title: 'Pick up rental camping gear', detail: 'Tent, sleeping bag, mat, cookware', cost: '$50–100 NZD per day', mapsQuery: 'Queenstown, New Zealand', link: 'https://smallplanetsports.com/rentals/camp-and-hike/' },
+      { type: 'transport', time: '11:15 AM', title: 'Bus to Routeburn Shelter', detail: 'Queenstown → The Divide', cost: '$155 NZD per person (includes return)', mapsQuery: 'Routeburn Shelter, Glenorchy, New Zealand', link: 'https://www.tracknet.net/' },
+      { type: 'hike', time: '~1:00 PM', title: 'Hike to Routeburn Flats Campsite', detail: 'Distance: 7.5 km | Duration: 1.5–2.5 hrs', mapsQuery: 'Routeburn Flats Campsite, New Zealand', link: 'https://www.doc.govt.nz/parks-and-recreation/places-to-go/fiordland/places/fiordland-national-park/things-to-do/tracks/routeburn-track/' },
+      { type: 'activity', time: 'Evening', title: 'Camp at Routeburn Flats', detail: 'Cook dinner, rest up for Day 2' }
     ]
   },
   {
@@ -162,33 +72,12 @@ const days: Day[] = [
     label: 'Apr 30',
     date: 'Wednesday, April 30',
     title: 'Routeburn Track: Day 2',
-    subtitle: '13.5 km across the track',
+    subtitle: '13.5 km across the track (longest day)',
     items: [
-      {
-        type: 'activity',
-        time: 'Morning',
-        title: 'Break camp & breakfast',
-        detail: 'Early start recommended'
-      },
-      {
-        type: 'hike',
-        time: '~8:00 AM',
-        title: 'Hike to Lake Mackenzie Hut',
-        detail: 'Distance: 13.5 km | Duration: 5–6 hrs | Longest day',
-        mapsQuery: 'Lake Mackenzie Hut, Routeburn Track, New Zealand'
-      },
-      {
-        type: 'activity',
-        time: 'Afternoon',
-        title: 'Scenic breaks & lunch en route',
-        detail: 'Harris Saddle views, forest sections'
-      },
-      {
-        type: 'activity',
-        time: 'Evening',
-        title: 'Camp at Lake Mackenzie Hut',
-        detail: 'Recover from longest day'
-      }
+      { type: 'activity', time: 'Morning', title: 'Break camp & breakfast', detail: 'Early start recommended' },
+      { type: 'hike', time: '~8:00 AM', title: 'Hike to Lake Mackenzie Hut', detail: 'Distance: 13.5 km | Duration: 5–6 hrs | Longest day', mapsQuery: 'Lake Mackenzie Hut, Routeburn Track, New Zealand' },
+      { type: 'activity', time: 'Afternoon', title: 'Scenic breaks & lunch en route', detail: 'Harris Saddle views, forest sections' },
+      { type: 'activity', time: 'Evening', title: 'Camp at Lake Mackenzie Hut', detail: 'Recover from longest day' }
     ]
   },
   {
@@ -198,39 +87,11 @@ const days: Day[] = [
     title: 'Routeburn Track: Exit Day',
     subtitle: '12 km to The Divide, then buses home',
     items: [
-      {
-        type: 'activity',
-        time: 'Morning',
-        title: 'Break camp & breakfast',
-        detail: 'Chill morning pace'
-      },
-      {
-        type: 'hike',
-        time: '~9:00 AM',
-        title: 'Hike to The Divide (park exit)',
-        detail: 'Distance: 12 km | Duration: 4–5.5 hrs | Mostly downhill',
-        mapsQuery: 'The Divide, Fiordland, New Zealand'
-      },
-      {
-        type: 'transport',
-        time: '3:15 PM',
-        title: 'Bus: The Divide → Te Anau',
-        detail: 'Duration: 1 hr 15 mins | Return rental gear'
-      },
-      {
-        type: 'transport',
-        time: '5:00 PM',
-        title: 'Bus: Te Anau → Queenstown',
-        detail: 'Duration: 2 hrs 30 mins',
-        mapsQuery: 'Te Anau, Southland, New Zealand'
-      },
-      {
-        type: 'hotel',
-        time: 'Evening',
-        title: 'Queenstown accommodation',
-        detail: 'Hotel or Airbnb (TBD)',
-        cost: 'TBD'
-      }
+      { type: 'activity', time: 'Morning', title: 'Break camp & breakfast', detail: 'Chill morning pace' },
+      { type: 'hike', time: '~9:00 AM', title: 'Hike to The Divide (park exit)', detail: 'Distance: 12 km | Duration: 4–5.5 hrs | Mostly downhill', mapsQuery: 'The Divide, Fiordland, New Zealand' },
+      { type: 'transport', time: '3:15 PM', title: 'Bus: The Divide → Te Anau', detail: 'Duration: 1 hr 15 mins | Return rental gear' },
+      { type: 'transport', time: '5:00 PM', title: 'Bus: Te Anau → Queenstown', detail: 'Duration: 2 hrs 30 mins', mapsQuery: 'Te Anau, Southland, New Zealand' },
+      { type: 'hotel', time: 'Evening', title: 'Queenstown accommodation', detail: 'Hotel or Airbnb (TBD)', cost: 'TBD' }
     ]
   },
   {
@@ -238,33 +99,11 @@ const days: Day[] = [
     label: 'May 2',
     date: 'Friday, May 2',
     title: 'Skydiving in Queenstown',
-    subtitle: 'Rest day + adrenaline',
+    subtitle: 'Rest + adrenaline',
     items: [
-      {
-        type: 'activity',
-        time: 'Morning',
-        title: 'Sleep in & relax',
-        detail: 'Recover from Routeburn Track'
-      },
-      {
-        type: 'note',
-        title: 'Return rental camping gear',
-        detail: 'Before skydiving departure'
-      },
-      {
-        type: 'activity',
-        time: 'Noon',
-        title: 'Skydiving at NZONE',
-        detail: '15,000 or 12,000 ft jump',
-        cost: '$359 NZD per person',
-        mapsQuery: 'NZONE Skydive, 35 Shotover Street, Queenstown',
-        link: 'https://www.nzoneskydive.co.nz/'
-      },
-      {
-        type: 'meal',
-        time: 'Evening',
-        title: 'Celebrate with dinner in Queenstown'
-      }
+      { type: 'activity', time: 'Morning', title: 'Sleep in & relax', detail: 'Recover from Routeburn Track' },
+      { type: 'activity', time: 'Noon', title: 'Skydiving at NZONE', detail: '15,000 or 12,000 ft jump', cost: '$359 NZD per person', mapsQuery: 'NZONE Skydive, 35 Shotover Street, Queenstown', link: 'https://www.nzoneskydive.co.nz/' },
+      { type: 'meal', time: 'Evening', title: 'Celebrate with dinner in Queenstown' }
     ]
   },
   {
@@ -274,27 +113,9 @@ const days: Day[] = [
     title: 'Bikes, Wine & Departure',
     subtitle: 'Final Queenstown adventure',
     items: [
-      {
-        type: 'activity',
-        time: 'Afternoon',
-        title: 'Bike + Wine tour',
-        detail: 'Pedal through Queenstown vineyards, tastings',
-        cost: '$121 NZD per person'
-      },
-      {
-        type: 'flight',
-        time: 'Evening',
-        title: 'Fly back to Auckland',
-        detail: 'Queenstown (ZQN) → Auckland (AKL)',
-        cost: '$150 NZD per person',
-        mapsQuery: 'Queenstown Airport, Queenstown, New Zealand'
-      },
-      {
-        type: 'activity',
-        time: 'Night',
-        title: 'Final night in Auckland',
-        detail: 'Last-minute shopping, city walk, dinner'
-      }
+      { type: 'activity', time: 'Afternoon', title: 'Bike + Wine tour', detail: 'Pedal through Queenstown vineyards, tastings', cost: '$121 NZD per person' },
+      { type: 'flight', time: 'Evening', title: 'Fly back to Auckland', detail: 'Queenstown (ZQN) → Auckland (AKL)', cost: '$150 NZD per person', mapsQuery: 'Queenstown Airport, Queenstown, New Zealand' },
+      { type: 'activity', time: 'Night', title: 'Final night in Auckland', detail: 'Last-minute shopping, city walk, dinner' }
     ]
   },
   {
@@ -304,80 +125,34 @@ const days: Day[] = [
     title: 'Departures',
     subtitle: 'Safe travels home!',
     items: [
-      {
-        type: 'flight',
-        time: '1:00 PM',
-        title: 'Kevin Xiang departs',
-        detail: 'Flight DL0064 from Auckland',
-        mapsQuery: 'Auckland Airport, Auckland, New Zealand'
-      },
-      {
-        type: 'flight',
-        time: '1:50 PM',
-        title: 'Evan Liu & Yang Lowe depart',
-        detail: 'Flights TBD / UA336 from Auckland'
-      },
-      {
-        type: 'flight',
-        time: '7:25 PM',
-        title: 'Philippe & Erica & Matthew depart',
-        detail: 'Flight NZ2 from Auckland'
-      },
-      {
-        type: 'flight',
-        time: '7:50 PM',
-        title: 'David Song departs',
-        detail: 'Flight NZ8 from Auckland'
-      },
-      {
-        type: 'flight',
-        time: '8:00 PM',
-        title: 'Adriene Tien departs',
-        detail: 'Flight NZ4752 from Auckland'
-      }
+      { type: 'flight', time: '1:00 PM', title: 'Kevin Xiang departs', detail: 'Flight DL0064 from Auckland', mapsQuery: 'Auckland Airport, Auckland, New Zealand' },
+      { type: 'flight', time: '1:50 PM', title: 'Evan Liu & Yang Lowe depart', detail: 'Flights TBD / UA336 from Auckland' },
+      { type: 'flight', time: '7:25 PM', title: 'Philippe & Erica & Matthew depart', detail: 'Flight NZ2 from Auckland' },
+      { type: 'flight', time: '7:50 PM', title: 'David Song departs', detail: 'Flight NZ8 from Auckland' },
+      { type: 'flight', time: '8:00 PM', title: 'Adriene Tien departs', detail: 'Flight NZ4752 from Auckland' }
     ]
   }
 ];
 
-// Type defs for quick reference
-interface Hotel {
-  name: string;
-  address: string;
-  dates: string;
-  link?: string;
-}
-
-interface EmergencyContact {
-  label: string;
-  number: string;
-  detail?: string;
-}
-
-interface NZPhrase {
-  maori: string;
-  english: string;
-}
+interface Hotel { name: string; address: string; dates: string; link?: string; }
+interface EmergencyContact { label: string; number: string; detail?: string; }
+interface NZPhrase { maori: string; english: string; }
 
 const hotels: Hotel[] = [
-  {
-    name: 'Lylo Pod Hostel',
-    address: '36 Man Street, Queenstown 9300 NZ',
-    dates: 'Apr 28–29',
-    link: 'https://www.lylo.com/queenstown/rooms-pods/pods-room/'
-  }
+  { name: 'Lylo Pod Hostel', address: '36 Man Street, Queenstown 9300 NZ', dates: 'Apr 28–29', link: 'https://www.lylo.com/queenstown/rooms-pods/pods-room/' }
 ];
 
 const emergencyContacts: EmergencyContact[] = [
-  { label: 'Police / Fire / Ambulance', number: '111' },
+  { label: 'Emergency (Police/Fire/Ambulance)', number: '111' },
   { label: 'Non-emergency Police', number: '105' },
   { label: 'DOC Backcountry Emergency', number: '0800 362 468' }
 ];
 
 const nzPhrases: NZPhrase[] = [
   { maori: 'Kia ora', english: 'Hello' },
-  { maori: 'Ka pai', english: 'Good job / Well done' },
+  { maori: 'Ka pai', english: 'Good job' },
   { maori: 'Haere rā', english: 'Goodbye' },
-  { maori: 'Sweet as', english: 'Awesome / Perfect' },
+  { maori: 'Sweet as', english: 'Awesome' },
   { maori: 'Chur', english: 'Thanks / Cool' },
   { maori: 'Tramping', english: 'Hiking' },
   { maori: 'Jandals', english: 'Flip-flops' },
@@ -385,43 +160,16 @@ const nzPhrases: NZPhrase[] = [
   { maori: 'Nah yeah', english: 'Yes' }
 ];
 
-// Helper function to get color classes by type
-function getTypeColor(type: ItemType): string {
-  const colors: Record<ItemType, string> = {
-    flight: 'border-blue-500 bg-blue-50 dark:bg-blue-900/20',
-    transport: 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20',
-    hike: 'border-green-600 bg-green-50 dark:bg-green-900/20',
-    hotel: 'border-cyan-500 bg-cyan-50 dark:bg-cyan-900/20',
-    activity: 'border-orange-500 bg-orange-50 dark:bg-orange-900/20',
-    meal: 'border-amber-500 bg-amber-50 dark:bg-amber-900/20',
-    info: 'border-gray-400 bg-gray-50 dark:bg-gray-900/20',
-    note: 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
-  };
-  return colors[type];
-}
-
 function getTypeIcon(type: ItemType): string {
   const icons: Record<ItemType, string> = {
-    flight: '✈️',
-    transport: '🚌',
-    hike: '🥾',
-    hotel: '🏨',
-    activity: '🎯',
-    meal: '🍴',
-    info: 'ℹ️',
-    note: '📝'
+    flight: '✈️', transport: '🚌', hike: '🥾', hotel: '🏨',
+    activity: '🎯', meal: '🍴', info: 'ℹ️'
   };
   return icons[type];
 }
 
 function generateMapsLink(query: string): string {
   return `https://maps.google.com/?q=${encodeURIComponent(query)}`;
-}
-
-function copyToClipboard(text: string) {
-  navigator.clipboard.writeText(text).then(() => {
-    alert('Copied: ' + text);
-  });
 }
 ---
 
@@ -430,9 +178,45 @@ function copyToClipboard(text: string) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NZ Trip | Apr 27 – May 4, 2026</title>
+  <title>New Zealand 2026 | Apr 27 – May 4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Base styles */
+    :root {
+      /* NZ-inspired color palette */
+      --color-cream: #faf9f7;
+      --color-forest: #1b3d2d;
+      --color-ocean: #0d5b6e;
+      --color-sky: #7ea8c4;
+      --color-gold: #c9a961;
+      --color-earth: #a87a56;
+      --color-leaf: #5ba582;
+      --color-accent: #d4746f;
+
+      /* Category colors */
+      --color-flight: #0d5b6e;
+      --color-transport: #5ba582;
+      --color-hike: #2d6a4f;
+      --color-hotel: #7ea8c4;
+      --color-activity: #c9a961;
+      --color-meal: #d4746f;
+      --color-info: #9b8b7e;
+
+      /* Neutral palette */
+      --color-bg: #faf9f7;
+      --color-text: #1a1a1a;
+      --color-text-muted: #6b6b6b;
+      --color-border: #e8e7e5;
+      --color-card-bg: #fff9f7;
+
+      --font-heading: 'Noto Serif JP', serif;
+      --font-body: 'Inter', sans-serif;
+      --radius-sm: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -441,833 +225,587 @@ function copyToClipboard(text: string) {
 
     html {
       scroll-behavior: smooth;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      color: #1f2937;
-      background-color: #f9fafb;
+      font-family: var(--font-body);
+      background-color: var(--color-bg);
+      color: var(--color-text);
     }
 
     body {
       line-height: 1.6;
       overflow: auto !important;
-    }
-
-    /* Dark mode support */
-    @media (prefers-color-scheme: dark) {
-      html {
-        color: #f3f4f6;
-        background-color: #111827;
-      }
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* Typography */
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      margin-bottom: 0.5rem;
+    h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; letter-spacing: -0.01em; }
+    h1 { font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.75rem; }
+    h2 { font-size: 1.875rem; margin-bottom: 0.5rem; }
+    h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    p { color: var(--color-text); }
+
+    /* Petal animation */
+    @keyframes petalFall {
+      0% { transform: translateY(-5vh) rotate(0) rotate3d(1, 0.5, 0, 0); opacity: 0.8; }
+      to { transform: translateY(105vh) rotate(360deg) rotate3d(1, 0.5, 0, 720deg); opacity: 0; }
     }
 
-    h2 {
-      font-size: 1.875rem;
-      font-weight: 700;
-      letter-spacing: -0.015em;
-      margin-bottom: 0.75rem;
+    @keyframes petalSway {
+      0%, to { transform: translateX(0); }
+      25% { transform: translateX(20px); }
+      75% { transform: translateX(-15px); }
     }
 
-    h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
+    .petal {
+      pointer-events: none;
+      position: absolute;
+      opacity: 0.6;
+      animation: petalFall linear infinite;
+      will-change: transform;
     }
 
-    p, li {
-      font-size: 1rem;
-      line-height: 1.6;
+    .petal-inner {
+      width: 12px;
+      height: 16px;
+      animation: petalSway ease-in-out infinite;
+      background: linear-gradient(135deg, #2d6a4f, #5ba582);
+      border-radius: 50% 0;
+      opacity: 0.7;
     }
 
     /* Sticky Navigation */
-    nav.sticky-nav {
+    nav.sticky {
       position: sticky;
       top: 0;
-      z-index: 50;
-      background: linear-gradient(to bottom, rgba(249, 250, 251, 0.95), rgba(249, 250, 251, 0.8));
-      backdrop-filter: blur(10px);
-      border-bottom: 2px solid #e5e7eb;
-      padding: 0.75rem 0;
+      z-index: 40;
+      background: rgba(250, 249, 247, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      padding: 1rem 0;
+    }
+
+    .nav-container {
+      max-width: 100%;
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
+      padding: 0 1.5rem;
     }
 
-    @media (prefers-color-scheme: dark) {
-      nav.sticky-nav {
-        background: linear-gradient(to bottom, rgba(17, 24, 39, 0.95), rgba(17, 24, 39, 0.8));
-        border-bottom-color: #374151;
-      }
-    }
-
-    nav.sticky-nav ul {
+    .nav-tabs {
       display: flex;
+      gap: 0.75rem;
       list-style: none;
-      gap: 0.5rem;
-      padding: 0 1rem;
       white-space: nowrap;
-      min-width: 100%;
+      min-width: fit-content;
     }
 
-    nav.sticky-nav button {
-      padding: 0.5rem 1rem;
+    .nav-btn {
+      padding: 0.5rem 1.25rem;
+      border: 1.5px solid var(--color-border);
+      background: white;
+      color: var(--color-text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
       font-size: 0.875rem;
       font-weight: 500;
-      border: 2px solid #d1d5db;
-      background: white;
-      color: #1f2937;
-      border-radius: 0.375rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      font-family: var(--font-body);
+      transition: all 0.3s ease;
       flex-shrink: 0;
     }
 
-    @media (prefers-color-scheme: dark) {
-      nav.sticky-nav button {
-        background: #1f2937;
-        color: #f3f4f6;
-        border-color: #4b5563;
-      }
+    .nav-btn:hover {
+      border-color: var(--color-forest);
+      color: var(--color-forest);
     }
 
-    nav.sticky-nav button:hover {
-      border-color: #10b981;
-      background-color: #ecfdf5;
-      color: #059669;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      nav.sticky-nav button:hover {
-        background-color: #064e3b;
-      }
-    }
-
-    nav.sticky-nav button.active {
-      border-color: #10b981;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    .nav-btn.active {
+      background: var(--color-forest);
       color: white;
-      font-weight: 600;
+      border-color: var(--color-forest);
     }
 
     /* Hero Section */
     .hero {
-      background: linear-gradient(135deg, #065f46 0%, #047857 50%, #10b981 100%);
+      background: linear-gradient(135deg, var(--color-forest) 0%, var(--color-ocean) 100%);
       color: white;
-      padding: 3rem 1.5rem;
+      padding: 4rem 1.5rem 5rem;
       text-align: center;
-      border-bottom: 4px solid #059669;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .hero h1 {
-      font-size: 3rem;
+      font-size: 3.5rem;
       margin-bottom: 0.5rem;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      opacity: 0.98;
+      letter-spacing: -0.02em;
     }
 
     .hero-dates {
       font-size: 1.125rem;
+      opacity: 0.9;
       margin-bottom: 1rem;
-      opacity: 0.95;
     }
 
-    .hero-emoji {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+    .hero-tagline {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      font-weight: 300;
     }
 
     /* Container */
     .container {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 3rem 1.5rem;
     }
 
     /* Day sections */
     .day-section {
-      margin-bottom: 3rem;
-      scroll-margin-top: 80px;
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 90px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
     }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .day-section:nth-child(1) { animation-delay: 0.1s; }
+    .day-section:nth-child(2) { animation-delay: 0.15s; }
+    .day-section:nth-child(3) { animation-delay: 0.2s; }
+    .day-section:nth-child(4) { animation-delay: 0.25s; }
+    .day-section:nth-child(5) { animation-delay: 0.3s; }
+    .day-section:nth-child(6) { animation-delay: 0.35s; }
+    .day-section:nth-child(7) { animation-delay: 0.4s; }
+    .day-section:nth-child(8) { animation-delay: 0.45s; }
 
     .day-header {
-      border-bottom: 3px solid #10b981;
-      padding-bottom: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--color-leaf);
     }
 
-    .day-header h2 {
-      margin-bottom: 0.25rem;
-      color: #065f46;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .day-header h2 {
-        color: #6ee7b7;
-      }
-    }
-
-    .day-meta {
+    .day-date {
       font-size: 0.875rem;
-      color: #6b7280;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       margin-bottom: 0.5rem;
+      font-weight: 500;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .day-meta {
-        color: #9ca3af;
-      }
+    .day-title {
+      font-size: 2rem;
+      color: var(--color-forest);
+      margin-bottom: 0.25rem;
     }
 
     .day-subtitle {
       font-size: 1rem;
-      color: #4b5563;
-      font-weight: 500;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .day-subtitle {
-        color: #d1d5db;
-      }
+      color: var(--color-text-muted);
+      font-weight: 300;
     }
 
     /* Timeline */
     .timeline {
       position: relative;
-      padding-left: 0;
+      padding-left: 3rem;
     }
 
     .timeline::before {
       content: '';
       position: absolute;
-      left: 20px;
+      left: 8px;
       top: 0;
       bottom: 0;
       width: 2px;
-      background: linear-gradient(to bottom, #10b981, #d1d5db);
+      background: linear-gradient(to bottom, var(--color-leaf), var(--color-border));
     }
 
     .timeline-item {
       position: relative;
       margin-bottom: 1.5rem;
-      padding-left: 60px;
     }
 
-    .timeline-item::before {
-      content: '';
+    .timeline-dot {
       position: absolute;
-      left: 10px;
-      top: 6px;
-      width: 20px;
-      height: 20px;
+      left: -29px;
+      top: 8px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: #10b981;
       border: 3px solid white;
+      background: var(--color-leaf);
       z-index: 2;
+      transition: all 0.3s ease;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .timeline-item::before {
-        border-color: #111827;
-      }
-    }
-
-    .timeline-item.flight::before {
-      background: #3b82f6;
-    }
-
-    .timeline-item.transport::before {
-      background: #6366f1;
-    }
-
-    .timeline-item.hike::before {
-      background: #22c55e;
-    }
-
-    .timeline-item.hotel::before {
-      background: #06b6d4;
-    }
-
-    .timeline-item.activity::before {
-      background: #f97316;
-    }
-
-    .timeline-item.meal::before {
-      background: #eab308;
-    }
-
-    .timeline-item.info::before {
-      background: #9ca3af;
-    }
-
-    .timeline-item.note::before {
-      background: #a855f7;
-    }
+    .timeline-item.flight .timeline-dot { background: var(--color-flight); }
+    .timeline-item.transport .timeline-dot { background: var(--color-transport); }
+    .timeline-item.hike .timeline-dot { background: var(--color-hike); }
+    .timeline-item.hotel .timeline-dot { background: var(--color-hotel); }
+    .timeline-item.activity .timeline-dot { background: var(--color-activity); }
+    .timeline-item.meal .timeline-dot { background: var(--color-meal); }
+    .timeline-item.info .timeline-dot { background: var(--color-info); }
 
     .timeline-content {
-      padding: 1rem;
-      background: white;
-      border: 2px solid #e5e7eb;
-      border-radius: 0.5rem;
-      transition: all 0.2s ease;
+      padding: 1.25rem;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-leaf);
+      transition: all 0.3s ease;
+      animation: slideIn 0.4s ease;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .timeline-content {
-        background: #1f2937;
-        border-color: #374151;
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
       }
     }
 
-    .timeline-item:hover .timeline-content {
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
-      border-color: #10b981;
-    }
+    .timeline-item.flight .timeline-content { border-left-color: var(--color-flight); }
+    .timeline-item.transport .timeline-content { border-left-color: var(--color-transport); }
+    .timeline-item.hike .timeline-content { border-left-color: var(--color-hike); }
+    .timeline-item.hotel .timeline-content { border-left-color: var(--color-hotel); }
+    .timeline-item.activity .timeline-content { border-left-color: var(--color-activity); }
+    .timeline-item.meal .timeline-content { border-left-color: var(--color-meal); }
+    .timeline-item.info .timeline-content { border-left-color: var(--color-info); }
 
-    .timeline-item.flight:hover .timeline-content {
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-      border-color: #3b82f6;
-    }
-
-    .timeline-item.transport:hover .timeline-content {
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
-      border-color: #6366f1;
-    }
-
-    .timeline-item.hike:hover .timeline-content {
-      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
-      border-color: #22c55e;
-    }
-
-    .timeline-item.hotel:hover .timeline-content {
-      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.15);
-      border-color: #06b6d4;
-    }
-
-    .timeline-item.activity:hover .timeline-content {
-      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
-      border-color: #f97316;
-    }
-
-    .timeline-item.meal:hover .timeline-content {
-      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.15);
-      border-color: #eab308;
-    }
-
-    .timeline-item.note:hover .timeline-content {
-      box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);
-      border-color: #a855f7;
+    .timeline-content:hover {
+      border-color: var(--color-forest);
+      box-shadow: 0 4px 12px rgba(27, 61, 45, 0.08);
+      transform: translateY(-2px);
     }
 
     .timeline-time {
-      font-size: 0.875rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: #10b981;
-      margin-bottom: 0.25rem;
+      color: var(--color-flight);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
     }
 
-    .timeline-item.flight .timeline-time {
-      color: #3b82f6;
-    }
-
-    .timeline-item.transport .timeline-time {
-      color: #6366f1;
-    }
-
-    .timeline-item.hike .timeline-time {
-      color: #22c55e;
-    }
-
-    .timeline-item.hotel .timeline-time {
-      color: #06b6d4;
-    }
-
-    .timeline-item.activity .timeline-time {
-      color: #f97316;
-    }
-
-    .timeline-item.meal .timeline-time {
-      color: #eab308;
-    }
-
-    .timeline-item.note .timeline-time {
-      color: #a855f7;
-    }
+    .timeline-item.transport .timeline-time { color: var(--color-transport); }
+    .timeline-item.hike .timeline-time { color: var(--color-hike); }
+    .timeline-item.hotel .timeline-time { color: var(--color-hotel); }
+    .timeline-item.activity .timeline-time { color: var(--color-activity); }
+    .timeline-item.meal .timeline-time { color: var(--color-meal); }
+    .timeline-item.info .timeline-time { color: var(--color-info); }
 
     .timeline-title {
-      font-weight: 600;
       font-size: 1.05rem;
-      margin-bottom: 0.25rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      color: var(--color-text);
     }
 
     .timeline-detail {
       font-size: 0.95rem;
-      color: #6b7280;
-      margin-bottom: 0.5rem;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .timeline-detail {
-        color: #d1d5db;
-      }
+      color: var(--color-text-muted);
+      line-height: 1.5;
     }
 
     .timeline-meta {
-      font-size: 0.85rem;
-      color: #9ca3af;
-      margin-top: 0.5rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
     }
 
     .meta-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.75rem;
-      background: rgba(16, 185, 129, 0.1);
-      border-radius: 9999px;
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      background: rgba(45, 106, 79, 0.08);
+      color: var(--color-forest);
+      border-radius: 999px;
       font-weight: 500;
-    }
-
-    .timeline-item.flight .meta-badge {
-      background: rgba(59, 130, 246, 0.1);
-      color: #1e40af;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .timeline-item.flight .meta-badge {
-        color: #93c5fd;
-      }
-    }
-
-    .timeline-item.transport .meta-badge {
-      background: rgba(99, 102, 241, 0.1);
-      color: #3730a3;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .timeline-item.transport .meta-badge {
-        color: #a5b4fc;
-      }
-    }
-
-    .timeline-item.hike .meta-badge {
-      background: rgba(34, 197, 94, 0.1);
-      color: #15803d;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .timeline-item.hike .meta-badge {
-        color: #86efac;
-      }
-    }
-
-    .timeline-item.hotel .meta-badge {
-      background: rgba(6, 182, 212, 0.1);
-      color: #0e7490;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .timeline-item.hotel .meta-badge {
-        color: #67e8f9;
-      }
-    }
-
-    .timeline-item.activity .meta-badge {
-      background: rgba(249, 115, 22, 0.1);
-      color: #b45309;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .timeline-item.activity .meta-badge {
-        color: #fed7aa;
-      }
-    }
-
-    .timeline-item.meal .meta-badge {
-      background: rgba(234, 179, 8, 0.1);
-      color: #854d0e;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .timeline-item.meal .meta-badge {
-        color: #fef08a;
-      }
     }
 
     /* Links and buttons */
     a {
-      color: #10b981;
+      color: var(--color-forest);
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s ease;
+      transition: color 0.3s ease;
     }
 
     a:hover {
-      color: #059669;
+      color: var(--color-ocean);
       text-decoration: underline;
     }
 
-    @media (prefers-color-scheme: dark) {
-      a {
-        color: #6ee7b7;
-      }
-      a:hover {
-        color: #a7f3d0;
-      }
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    .btn-maps, .btn-copy {
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.4rem 0.8rem;
-      font-size: 0.875rem;
-      font-weight: 500;
-      background: #10b981;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      background: var(--color-forest);
       color: white;
       border: none;
-      border-radius: 0.375rem;
+      border-radius: var(--radius-sm);
       cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: var(--font-body);
       transition: all 0.2s ease;
-      margin-right: 0.5rem;
-      margin-top: 0.5rem;
+      text-decoration: none;
     }
 
-    .btn-maps:hover, .btn-copy:hover {
-      background: #059669;
+    .btn:hover {
+      background: var(--color-ocean);
       transform: translateY(-1px);
-      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 4px 8px rgba(27, 61, 45, 0.15);
     }
 
     .btn-copy {
-      background: #6b7280;
+      background: var(--color-text-muted);
     }
 
     .btn-copy:hover {
-      background: #4b5563;
+      background: var(--color-forest);
     }
 
-    /* Quick Reference */
+    /* Quick Reference Section */
     .reference-section {
       background: white;
-      border: 2px solid #e5e7eb;
-      border-radius: 0.75rem;
-      padding: 2rem;
-      margin-top: 3rem;
-      margin-bottom: 2rem;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .reference-section {
-        background: #1f2937;
-        border-color: #374151;
-      }
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      margin-top: 4rem;
+      animation: fadeInUp 0.6s ease 0.5s forwards;
+      opacity: 0;
     }
 
     .reference-section h3 {
-      color: #065f46;
-      margin-bottom: 1.5rem;
-      border-bottom: 2px solid #10b981;
-      padding-bottom: 0.75rem;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .reference-section h3 {
-        color: #6ee7b7;
-      }
-    }
-
-    .hotels-grid {
-      display: grid;
-      gap: 1.5rem;
+      color: var(--color-forest);
       margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--color-leaf);
+      font-size: 1.5rem;
     }
 
+    .reference-subsection {
+      margin-bottom: 3rem;
+    }
+
+    .reference-subsection:last-child {
+      margin-bottom: 0;
+    }
+
+    .reference-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-forest);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Hotel cards */
     .hotel-card {
       padding: 1.5rem;
-      background: #f3f4f6;
-      border: 2px solid #d1d5db;
-      border-radius: 0.5rem;
-      border-left: 4px solid #06b6d4;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-hotel);
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .hotel-card {
-        background: #111827;
-        border-color: #4b5563;
-      }
+    .hotel-card:hover {
+      border-color: var(--color-hotel);
+      box-shadow: 0 4px 12px rgba(126, 168, 196, 0.1);
     }
 
     .hotel-name {
-      font-weight: 600;
+      font-weight: 700;
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
+      color: var(--color-forest);
     }
 
-    .hotel-detail {
+    .hotel-info {
       font-size: 0.95rem;
-      color: #6b7280;
-      margin-bottom: 0.5rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0.35rem;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .hotel-detail {
-        color: #d1d5db;
-      }
-    }
-
-    .emergency-grid {
-      display: grid;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .emergency-item {
-      padding: 1rem;
-      background: #fef2f2;
-      border: 2px solid #fecaca;
-      border-radius: 0.5rem;
-      border-left: 4px solid #ef4444;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .emergency-item {
-        background: #7f1d1d;
-        border-color: #991b1b;
-      }
+    /* Emergency cards */
+    .emergency-card {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #f8ecec, #fce8e8);
+      border: 1px solid #f5d5d5;
+      border-left: 4px solid #d4746f;
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
     }
 
     .emergency-label {
       font-weight: 600;
-      color: #7f1d1d;
-      margin-bottom: 0.25rem;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .emergency-label {
-        color: #fca5a5;
-      }
+      color: #a87a56;
+      margin-bottom: 0.35rem;
+      font-size: 0.9rem;
     }
 
     .emergency-number {
-      font-size: 1.5rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: #dc2626;
-      font-family: 'Monaco', 'Menlo', monospace;
+      color: #d4746f;
+      font-family: var(--font-body);
+      letter-spacing: 0.05em;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .emergency-number {
-        color: #fca5a5;
-      }
-    }
-
-    .emergency-detail {
-      font-size: 0.85rem;
-      color: #6b7280;
-      margin-top: 0.25rem;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .emergency-detail {
-        color: #d1d5db;
-      }
-    }
-
-    .phrases-grid {
+    /* Phrase cards */
+    .phrase-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
     }
 
     .phrase-card {
-      padding: 1rem;
-      background: #f0fdf4;
-      border: 2px solid #bbf7d0;
-      border-radius: 0.5rem;
-      border-left: 4px solid #22c55e;
+      padding: 1.25rem;
+      background: linear-gradient(135deg, #f0f6f3, #e8f2ed);
+      border: 1px solid #d4e8e0;
+      border-radius: var(--radius-md);
+      transition: all 0.3s ease;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .phrase-card {
-        background: #064e3b;
-        border-color: #10b981;
-      }
+    .phrase-card:hover {
+      border-color: var(--color-leaf);
+      box-shadow: 0 4px 12px rgba(91, 165, 130, 0.1);
+      transform: translateY(-2px);
     }
 
     .phrase-maori {
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--color-leaf);
+      margin-bottom: 0.35rem;
       font-size: 1.05rem;
-      color: #15803d;
-      margin-bottom: 0.25rem;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .phrase-maori {
-        color: #86efac;
-      }
     }
 
     .phrase-english {
-      font-size: 0.95rem;
-      color: #6b7280;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .phrase-english {
-        color: #d1d5db;
-      }
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
     }
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 2rem;
-      color: #6b7280;
-      border-top: 1px solid #e5e7eb;
+      padding: 3rem;
+      color: var(--color-text-muted);
+      border-top: 1px solid var(--color-border);
       margin-top: 3rem;
+      font-size: 0.95rem;
     }
 
-    @media (prefers-color-scheme: dark) {
-      footer {
-        border-top-color: #374151;
-        color: #9ca3af;
-      }
-    }
-
-    /* Mobile responsiveness */
+    /* Responsive */
     @media (max-width: 640px) {
-      h1 {
-        font-size: 1.875rem;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-      }
-
-      .hero {
-        padding: 2rem 1rem;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .container {
-        padding: 1.5rem 0.75rem;
-      }
-
-      .reference-section {
-        padding: 1.5rem;
-      }
-
-      .timeline::before {
-        left: 15px;
-      }
-
-      .timeline-item {
-        padding-left: 50px;
-      }
-
-      .timeline-item::before {
-        left: 5px;
-        width: 16px;
-        height: 16px;
-      }
+      .hero h1 { font-size: 2.25rem; }
+      .container { padding: 2rem 1rem; }
+      .reference-section { padding: 2rem; }
+      .timeline { padding-left: 2.5rem; }
+      .timeline-dot { left: -25px; }
+      .phrase-grid { grid-template-columns: 1fr; }
+      .day-title { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
+  <!-- Petals animation -->
+  <div style="position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;">
+    <script>
+      for (let i = 0; i < 4; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.animationDuration = (3 + Math.random() * 2) + 's';
+        petal.style.animationDelay = Math.random() * 2 + 's';
+        const inner = document.createElement('div');
+        inner.className = 'petal-inner';
+        petal.appendChild(inner);
+        document.body.querySelector('[style*="position: fixed"]')?.appendChild(petal);
+      }
+    </script>
+  </div>
+
   <!-- Sticky Navigation -->
-  <nav class="sticky-nav">
-    <ul>
-      {days.map((day) => (
+  <nav class="sticky">
+    <div class="nav-container">
+      <ul class="nav-tabs">
+        {days.map((day) => (
+          <li>
+            <button
+              class="nav-btn"
+              data-anchor={day.id}
+              onclick={`document.getElementById('${day.id}').scrollIntoView(); updateNav('${day.id}')`}
+            >
+              {day.label}
+            </button>
+          </li>
+        ))}
         <li>
-          <button
-            class="nav-btn"
-            data-anchor={day.id}
-            onclick={`document.getElementById('${day.id}').scrollIntoView({ behavior: 'smooth' }); updateActiveNav('${day.id}')`}
-          >
-            {day.label}
+          <button class="nav-btn" data-anchor="info" onclick="document.getElementById('info').scrollIntoView(); updateNav('info')">
+            Info
           </button>
         </li>
-      ))}
-      <li>
-        <button
-          class="nav-btn"
-          data-anchor="info"
-          onclick={`document.getElementById('info').scrollIntoView({ behavior: 'smooth' }); updateActiveNav('info')`}
-        >
-          Info
-        </button>
-      </li>
-    </ul>
+      </ul>
+    </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="hero">
-    <div class="hero-emoji">🇳🇿</div>
-    <h1>New Zealand Adventure</h1>
-    <p class="hero-dates">April 27 – May 4, 2026</p>
-    <p>8 friends, 8 days, unforgettable memories</p>
+    <h1>New Zealand 2026</h1>
+    <p class="hero-dates">April 27 – May 4</p>
+    <p class="hero-tagline">8 friends · 8 days · unforgettable memories</p>
   </section>
 
-  <!-- Main Container -->
+  <!-- Main Content -->
   <div class="container">
-    <!-- Day Sections -->
     {days.map((day) => (
       <section class="day-section" id={day.id}>
         <div class="day-header">
-          <div class="day-meta">{day.date}</div>
-          <h2>{day.title}</h2>
+          <div class="day-date">{day.date}</div>
+          <h2 class="day-title">{day.title}</h2>
           {day.subtitle && <p class="day-subtitle">{day.subtitle}</p>}
         </div>
 
         <div class="timeline">
           {day.items.map((item) => (
             <div class={`timeline-item ${item.type}`}>
+              <div class="timeline-dot"></div>
               <div class="timeline-content">
                 {item.time && <div class="timeline-time">{item.time}</div>}
                 <div class="timeline-title">{getTypeIcon(item.type)} {item.title}</div>
                 {item.detail && <div class="timeline-detail">{item.detail}</div>}
-
-                <div class="timeline-meta">
-                  {item.cost && (
-                    <span class="meta-badge">
-                      💰 {item.cost}
-                    </span>
-                  )}
-                  {item.mapsQuery && (
-                    <a
-                      href={generateMapsLink(item.mapsQuery)}
-                      target="_blank"
-                      rel="noopener"
-                      class="btn-maps"
-                    >
-                      📍 Maps
-                    </a>
-                  )}
-                  {item.link && (
-                    <a href={item.link} target="_blank" rel="noopener">
-                      🔗 Booking
-                    </a>
-                  )}
-                </div>
+                {(item.cost || item.mapsQuery || item.link) && (
+                  <div class="timeline-meta">
+                    {item.cost && <span class="meta-badge">💰 {item.cost}</span>}
+                    {item.mapsQuery && (
+                      <a href={generateMapsLink(item.mapsQuery)} target="_blank" rel="noopener" class="btn">
+                        📍 Maps
+                      </a>
+                    )}
+                    {item.link && (
+                      <a href={item.link} target="_blank" rel="noopener" class="btn">
+                        🔗 Link
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -1275,91 +813,82 @@ function copyToClipboard(text: string) {
       </section>
     ))}
 
-    <!-- Quick Reference Section -->
+    <!-- Quick Reference -->
     <section class="reference-section" id="info">
-      <h3>⚡ Quick Reference</h3>
+      <h3>✨ Quick Reference</h3>
 
       <!-- Hotels -->
-      <h3 style="font-size: 1.1rem; margin-top: 1.5rem; border: none; color: #1f2937;">🏨 Accommodations</h3>
-      <div class="hotels-grid">
+      <div class="reference-subsection">
+        <div class="reference-title">🏨 Accommodations</div>
         {hotels.map((hotel) => (
           <div class="hotel-card">
             <div class="hotel-name">{hotel.name}</div>
-            <div class="hotel-detail">{hotel.address}</div>
-            <div class="hotel-detail">📅 {hotel.dates}</div>
-            <button
-              class="btn-copy"
-              onclick={`copyToClipboard('${hotel.address}')`}
-            >
-              📋 Copy Address
-            </button>
-            {hotel.link && (
-              <a href={hotel.link} target="_blank" rel="noopener" class="btn-maps">
-                🔗 Visit Website
-              </a>
-            )}
+            <div class="hotel-info">📍 {hotel.address}</div>
+            <div class="hotel-info">📅 {hotel.dates}</div>
+            <div style="margin-top: 0.75rem;">
+              <button class="btn btn-copy" onclick={`navigator.clipboard.writeText('${hotel.address}'); alert('Copied!')`}>
+                📋 Copy Address
+              </button>
+              {hotel.link && (
+                <a href={hotel.link} target="_blank" rel="noopener" class="btn" style="margin-left: 0.5rem;">
+                  🔗 Website
+                </a>
+              )}
+            </div>
           </div>
         ))}
       </div>
 
-      <!-- Emergency Contacts -->
-      <h3 style="font-size: 1.1rem; margin-top: 1.5rem; border: none; color: #1f2937;">🚨 Emergency Contacts</h3>
-      <div class="emergency-grid">
+      <!-- Emergency -->
+      <div class="reference-subsection">
+        <div class="reference-title">🚨 Emergency Contacts</div>
         {emergencyContacts.map((contact) => (
-          <div class="emergency-item">
+          <div class="emergency-card">
             <div class="emergency-label">{contact.label}</div>
             <div class="emergency-number">{contact.number}</div>
-            {contact.detail && <div class="emergency-detail">{contact.detail}</div>}
+            {contact.detail && <div style="font-size: 0.85rem; color: #a87a56; margin-top: 0.35rem;">{contact.detail}</div>}
           </div>
         ))}
       </div>
 
-      <!-- NZ Phrases -->
-      <h3 style="font-size: 1.1rem; margin-top: 1.5rem; border: none; color: #1f2937;">🗣️ Kia Ora: NZ Phrases</h3>
-      <div class="phrases-grid">
-        {nzPhrases.map((phrase) => (
-          <div class="phrase-card">
-            <div class="phrase-maori">{phrase.maori}</div>
-            <div class="phrase-english">{phrase.english}</div>
-          </div>
-        ))}
+      <!-- Phrases -->
+      <div class="reference-subsection">
+        <div class="reference-title">🗣️ Te Reo Māori & NZ Slang</div>
+        <div class="phrase-grid">
+          {nzPhrases.map((phrase) => (
+            <div class="phrase-card">
+              <div class="phrase-maori">{phrase.maori}</div>
+              <div class="phrase-english">{phrase.english}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   </div>
 
   <!-- Footer -->
   <footer>
-    <p>Safe travels! 🧭 | Made for the crew, 2026</p>
+    <p>Safe travels! 🥾 Kia ora | Made for the crew, 2026</p>
   </footer>
 
   <script>
-    function updateActiveNav(activeId) {
-      document.querySelectorAll('.nav-btn').forEach((btn) => {
-        btn.classList.remove('active');
-      });
-      const activeBtn = document.querySelector(`[data-anchor="${activeId}"]`);
-      if (activeBtn) activeBtn.classList.add('active');
+    function updateNav(id) {
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`[data-anchor="${id}"]`)?.classList.add('active');
     }
 
-    // Update active nav on scroll
     window.addEventListener('scroll', () => {
       const sections = document.querySelectorAll('[id]');
-      let currentSection = '';
-
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop - 100;
-        if (window.scrollY >= sectionTop) {
-          currentSection = section.getAttribute('id');
+      let current = '';
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 100) {
+          current = section.id;
         }
       });
-
-      if (currentSection) {
-        updateActiveNav(currentSection);
-      }
+      if (current) updateNav(current);
     });
 
-    // Set initial active
-    updateActiveNav('apr27');
+    updateNav('apr27');
   </script>
 </body>
 </html>
