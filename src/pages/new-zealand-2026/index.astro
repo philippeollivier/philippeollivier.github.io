@@ -83,7 +83,7 @@ const days: Day[] = [
     items: [
       { type: 'activity', time: 'Morning', title: 'Pick up camping gear', detail: 'Tent, sleeping bag, mat, cookware', cost: '$50–100 NZD / day', mapsQuery: 'Small Planet Sports Queenstown', link: 'https://smallplanetsports.com/rentals/camp-and-hike/' },
       { type: 'transport', time: '11:15 AM', title: 'Bus to Routeburn Shelter', detail: '1 hr 45 min ride from Queenstown', cost: '$155 NZD / person (return included)', mapsQuery: 'Routeburn Shelter Glenorchy New Zealand', link: 'https://www.tracknet.net/' },
-      { type: 'hike', time: '~1:00 PM', title: 'Hike to Routeburn Flats', detail: '7.5 km · 1.5–2.5 hrs · Moderate terrain', mapsQuery: 'Routeburn Flats Campsite New Zealand', link: 'https://www.doc.govt.nz/parks-and-recreation/places-to-go/fiordland/places/fiordland-national-park/things-to-do/tracks/routeburn-track/' },
+      { type: 'hike', time: '~1:00 PM', title: 'Hike to Routeburn Flats', detail: '7.5 km · 1.5–2.5 hrs · Moderate terrain', mapsQuery: 'Routeburn Flats Campsite New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/otago/routeburn-shelter-to-routeburn-flats-hut' },
       { type: 'activity', time: 'Evening', title: 'Camp at Routeburn Flats', detail: 'Set up camp, cook dinner, rest for Day 2' },
     ],
   },
@@ -93,7 +93,7 @@ const days: Day[] = [
     subtitle: '13.5 km — the longest day on the track',
     items: [
       { type: 'activity', time: 'Early AM', title: 'Break camp & breakfast', detail: 'Pack up and fuel up — big day ahead' },
-      { type: 'hike', time: '~8:00 AM', title: 'Hike to Lake Mackenzie', detail: '13.5 km · 5–6 hrs · Harris Saddle views, alpine passes', mapsQuery: 'Lake Mackenzie Hut Routeburn Track New Zealand' },
+      { type: 'hike', time: '~8:00 AM', title: 'Hike to Lake Mackenzie', detail: '13.5 km · 5–6 hrs · Harris Saddle views, alpine passes', mapsQuery: 'Lake Mackenzie Hut Routeburn Track New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/otago/routeburn-track-routeburn-falls-hut-to-lake-mackenzie-hut' },
       { type: 'meal', time: 'Midday', title: 'Lunch on the trail', detail: 'Scenic break near Harris Saddle' },
       { type: 'activity', time: 'Evening', title: 'Camp at Lake Mackenzie', detail: 'Recover from the longest day — you earned it' },
     ],
@@ -104,7 +104,7 @@ const days: Day[] = [
     subtitle: '12 km hike out, then buses back to Queenstown',
     items: [
       { type: 'activity', time: 'Morning', title: 'Break camp & breakfast', detail: 'Last morning on the track' },
-      { type: 'hike', time: '~9:00 AM', title: 'Hike to The Divide', detail: '12 km · 4–5.5 hrs · Mostly downhill', mapsQuery: 'The Divide Milford Road Fiordland New Zealand' },
+      { type: 'hike', time: '~9:00 AM', title: 'Hike to The Divide', detail: '12 km · 4–5.5 hrs · Mostly downhill', mapsQuery: 'The Divide Milford Road Fiordland New Zealand', link: 'https://www.alltrails.com/trail/new-zealand/southland/routeburn-track-lake-mackenzie-hut-to-the-divide' },
       { type: 'transport', time: '3:15 PM', title: 'Bus: The Divide → Te Anau', detail: '1 hr 15 min', mapsQuery: 'Te Anau Southland New Zealand' },
       { type: 'transport', time: '5:00 PM', title: 'Bus: Te Anau → Queenstown', detail: '2 hrs 30 min', mapsQuery: 'Queenstown New Zealand' },
       { type: 'hotel', time: 'Evening', title: 'Queenstown accommodation', detail: 'Hostel or Airbnb — TBD', cost: 'TBD' },
@@ -935,7 +935,7 @@ function mapsUrl(query: string): string {
     <div class="hero-content">
       <p class="hero-eyebrow">April 27 – May 4, 2026</p>
       <h1>New Zealand</h1>
-      <p class="hero-tagline">8 friends &middot; 8 days &middot; one unforgettable adventure</p>
+      <p class="hero-tagline">Kia maia, kia manawanui! - Mad Maggie</p>
     </div>
     <svg class="hero-mountains" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,80 L0,52 Q120,35 240,45 Q360,55 480,30 Q600,5 720,28 Q840,50 960,22 Q1080,0 1200,32 Q1320,55 1440,38 L1440,80 Z" fill="#f7f6f3"/>
@@ -1086,7 +1086,7 @@ function mapsUrl(query: string): string {
   <!-- Footer -->
   <footer class="footer">
     <p class="footer-text">Haere ra — safe travels, whanau</p>
-    <p>Made for the crew, 2026</p>
+    <p>If anything on this page is incorrect, kihi taku kaihe</p>
   </footer>
 
   <!-- Scripts -->
