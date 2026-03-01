@@ -251,36 +251,36 @@ const pageTransition = {
     requestAnimationFrame(animate);
   }
 
-  // Click handling
-  hexCanvas.addEventListener('click', (e) => {
-    if (transitioning) return;
-    const rect = hexCanvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-    for (let i = 0; i < hexPositions.length; i++) {
-      if (isInsideHexagon(mx, my, hexPositions[i].x, hexPositions[i].y, HEX_SIZE)) {
-        startTransition(i);
-        requestAnimationFrame(animateTransition);
-        break;
-      }
-    }
-  });
+  // Click handling (disabled)
+  // hexCanvas.addEventListener('click', (e) => {
+  //   if (transitioning) return;
+  //   const rect = hexCanvas.getBoundingClientRect();
+  //   const mx = e.clientX - rect.left;
+  //   const my = e.clientY - rect.top;
+  //   for (let i = 0; i < hexPositions.length; i++) {
+  //     if (isInsideHexagon(mx, my, hexPositions[i].x, hexPositions[i].y, HEX_SIZE)) {
+  //       startTransition(i);
+  //       requestAnimationFrame(animateTransition);
+  //       break;
+  //     }
+  //   }
+  // });
 
-  // Cursor style on hover
-  hexCanvas.addEventListener('mousemove', (e) => {
-    if (transitioning) return;
-    const rect = hexCanvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-    let hovering = false;
-    for (const pos of hexPositions) {
-      if (isInsideHexagon(mx, my, pos.x, pos.y, HEX_SIZE)) {
-        hovering = true;
-        break;
-      }
-    }
-    hexCanvas.style.cursor = hovering ? 'pointer' : 'default';
-  });
+  // Cursor style on hover (disabled)
+  // hexCanvas.addEventListener('mousemove', (e) => {
+  //   if (transitioning) return;
+  //   const rect = hexCanvas.getBoundingClientRect();
+  //   const mx = e.clientX - rect.left;
+  //   const my = e.clientY - rect.top;
+  //   let hovering = false;
+  //   for (const pos of hexPositions) {
+  //     if (isInsideHexagon(mx, my, pos.x, pos.y, HEX_SIZE)) {
+  //       hovering = true;
+  //       break;
+  //     }
+  //   }
+  //   hexCanvas.style.cursor = hovering ? 'pointer' : 'default';
+  // });
 
   // Prefetch destination pages after homepage has loaded
   if ('requestIdleCallback' in window) {
@@ -303,6 +303,7 @@ const pageTransition = {
     }, 100);
   }
 
-  animate();
+  // Orbiting hexagons disabled - keeping only title and GIF
+  // animate();
   }); // end astro:page-load
 </script>
