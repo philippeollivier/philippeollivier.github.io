@@ -1,0 +1,522 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Wedding Checklist">
+  <div id="wedding-app">
+    <!-- Password Login Screen -->
+    <div id="login-screen" class="login-container">
+      <div class="login-box">
+        <h1>Wedding Planning Checklist</h1>
+        <p>Enter password to access</p>
+        <input
+          id="password-input"
+          type="password"
+          placeholder="Password"
+          autocomplete="off"
+        />
+        <button id="login-btn">Unlock</button>
+        <p id="login-error" class="error-message"></p>
+      </div>
+    </div>
+
+    <!-- Checklist Content (Hidden until logged in) -->
+    <div id="checklist-screen" style="display: none;">
+      <!-- Marriage & Immigration Plan HTML -->
+      <div class="marriage-plan-container">
+        <header class="site-header">
+          <h1>Marriage & Immigration Plan</h1>
+          <p>NYC 2026</p>
+          <div class="header-tags">
+            <span class="header-tag">AOS Process</span>
+            <span class="header-tag">Shared Checklist</span>
+          </div>
+        </header>
+
+        <div class="container">
+          <!-- Quick Reference Checklist -->
+          <p class="section-label">Quick Reference Checklist</p>
+          <div class="card">
+
+            <div class="checklist-section">
+              <h3>Before the Wedding</h3>
+              <ul class="checklist">
+                <li><input type="checkbox" id="c1" data-item-id="c1"><label for="c1">Create Project Cupid account and complete online application together at nyc.gov/cupid</label></li>
+                <li><input type="checkbox" id="c2" data-item-id="c2"><label for="c2">Book marriage license appointment — Monday 9:00 AM slot release at nyc.gov/cupid</label></li>
+                <li><input type="checkbox" id="c3" data-item-id="c3"><label for="c3">Book ceremony appointment at 141 Worth St. — same Monday 9:00 AM slot release</label></li>
+                <li><input type="checkbox" id="c4" data-item-id="c4"><label for="c4">Gather her documents: Korean passport + certified Korean birth certificate with English translation</label></li>
+                <li><input type="checkbox" id="c5" data-item-id="c5"><label for="c5">Gather your documents: US passport or birth certificate</label></li>
+              </ul>
+            </div>
+
+            <div class="checklist-section">
+              <h3>Right After the Wedding</h3>
+              <ul class="checklist">
+                <li><input type="checkbox" id="c6" data-item-id="c6"><label for="c6">Obtain certified copies of marriage certificate (order at least 3)</label></li>
+                <li><input type="checkbox" id="c7" data-item-id="c7"><label for="c7">Open a joint bank account together</label></li>
+                <li><input type="checkbox" id="c8" data-item-id="c8"><label for="c8">Add her name to lease, utility bills, or insurance</label></li>
+                <li><input type="checkbox" id="c9" data-item-id="c9"><label for="c9">Schedule civil surgeon appointment for I-693 medical exam (uscis.gov/civil-surgeons)</label></li>
+                <li><input type="checkbox" id="c10" data-item-id="c10"><label for="c10">Begin collecting and organizing marriage evidence (photos, communication, shared accounts)</label></li>
+              </ul>
+            </div>
+
+            <div class="checklist-section">
+              <h3>AOS Package Preparation</h3>
+              <ul class="checklist">
+                <li><input type="checkbox" id="c11" data-item-id="c11"><label for="c11">Complete Form I-130 (you) + I-130A (her)</label></li>
+                <li><input type="checkbox" id="c12" data-item-id="c12"><label for="c12">Complete Form I-485 (her — green card application)</label></li>
+                <li><input type="checkbox" id="c13" data-item-id="c13"><label for="c13">Complete Form I-765 (her — work permit/EAD, category c9)</label></li>
+                <li><input type="checkbox" id="c14" data-item-id="c14"><label for="c14">Complete Form I-131 (her — Advance Parole/travel)</label></li>
+                <li><input type="checkbox" id="c15" data-item-id="c15"><label for="c15">Complete Form I-864 (you — Affidavit of Support with tax returns, pay stubs, employer letter)</label></li>
+                <li><input type="checkbox" id="c16" data-item-id="c16"><label for="c16">Obtain sealed I-693 envelope from civil surgeon — do not open</label></li>
+                <li><input type="checkbox" id="c17" data-item-id="c17"><label for="c17">Write cover letter addressing O1 denial with denial notice copy attached</label></li>
+                <li><input type="checkbox" id="c18" data-item-id="c18"><label for="c18">Assemble complete marriage evidence package</label></li>
+                <li><input type="checkbox" id="c19" data-item-id="c19"><label for="c19">Complete payment forms: G-1450 or G-1650 for each form requiring a fee</label></li>
+              </ul>
+            </div>
+
+            <div class="checklist-section">
+              <h3>Filing</h3>
+              <ul class="checklist">
+                <li><input type="checkbox" id="c20" data-item-id="c20"><label for="c20">Verify current USCIS lockbox mailing address at uscis.gov (check the day you mail)</label></li>
+                <li><input type="checkbox" id="c21" data-item-id="c21"><label for="c21">Make a complete photocopy of the entire package before mailing</label></li>
+                <li><input type="checkbox" id="c22" data-item-id="c22"><label for="c22">Mail via USPS Priority Mail with tracking, FedEx, or UPS</label></li>
+                <li><input type="checkbox" id="c23" data-item-id="c23"><label for="c23">Save the tracking number and all confirmation receipts</label></li>
+                <li><input type="checkbox" id="c24" data-item-id="c24"><label for="c24">She does NOT travel internationally after this point until Advance Parole is in hand</label></li>
+              </ul>
+            </div>
+
+            <div class="checklist-section">
+              <h3>After Filing</h3>
+              <ul class="checklist">
+                <li><input type="checkbox" id="c25" data-item-id="c25"><label for="c25">Watch for receipt notices (I-797C) within 2–4 weeks — one per form</label></li>
+                <li><input type="checkbox" id="c26" data-item-id="c26"><label for="c26">Attend biometrics appointment when notice arrives (do not miss)</label></li>
+                <li><input type="checkbox" id="c27" data-item-id="c27"><label for="c27">EAD card arrives — she can begin working only after physical card is in hand</label></li>
+                <li><input type="checkbox" id="c28" data-item-id="c28"><label for="c28">Prepare for I-485 interview — organize binders with originals of all documents</label></li>
+                <li><input type="checkbox" id="c29" data-item-id="c29"><label for="c29">Attend interview at 26 Federal Plaza — both of you required</label></li>
+                <li><input type="checkbox" id="c30" data-item-id="c30"><label for="c30">File I-751 during the 90-day window before the 2-year conditional green card expires</label></li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+        <footer>
+          Compiled March 2026. This document is for informational purposes only and does not constitute legal advice.<br>
+          Verify all USCIS fees and addresses at <strong>uscis.gov</strong> before filing. Immigration laws change — consult a licensed immigration attorney for guidance specific to your situation.
+        </footer>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface-alt: #fafaf8;
+    --border: #e2e0d8;
+    --accent: #2c5f8a;
+    --accent-light: #e8f0f7;
+    --accent-dark: #1e4266;
+    --warn: #b84c00;
+    --warn-light: #fff3ec;
+    --success: #1a6b3c;
+    --success-light: #edf7f2;
+    --neutral: #6b7280;
+    --text: #1a1a1a;
+    --text-muted: #4b5563;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* Login Screen */
+  .login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+  }
+
+  .login-box {
+    background: white;
+    padding: 48px 40px;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .login-box h1 {
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+    color: var(--accent-dark);
+  }
+
+  .login-box p {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    font-size: 0.95rem;
+  }
+
+  .login-box input {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+
+  .login-box input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+
+  .login-box button {
+    width: 100%;
+    padding: 12px 24px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .login-box button:hover {
+    background: var(--accent-dark);
+  }
+
+  .login-box button:active {
+    transform: scale(0.98);
+  }
+
+  .error-message {
+    color: var(--warn);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    display: none;
+  }
+
+  .error-message.show {
+    display: block;
+  }
+
+  /* Checklist Content */
+  .site-header {
+    background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+    color: white;
+    padding: 48px 32px 40px;
+    text-align: center;
+  }
+
+  .site-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .site-header p {
+    font-size: 1rem;
+    opacity: 0.8;
+  }
+
+  .header-tags {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .header-tag {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--neutral);
+    margin-bottom: 16px;
+    margin-top: 48px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+
+  .checklist-section {
+    margin-bottom: 28px;
+  }
+
+  .checklist-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .checklist-section h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--accent-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .checklist li input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .checklist li label {
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .checklist li input[type="checkbox"]:checked + label {
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+
+  footer {
+    padding: 40px 32px;
+    text-align: center;
+    background: var(--surface-alt);
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  footer strong {
+    font-weight: 600;
+  }
+</style>
+
+<script define:vars={{ correctPassword: 'phiji' }}>
+  // TODO: Replace with your API Gateway endpoint from SAM deployment
+  // Get this from: sam deploy output (ChecklistApi endpoint)
+  const API_BASE = 'https://your-api-gateway-url.execute-api.us-east-1.amazonaws.com/prod';
+
+  // Check if API endpoint is configured
+  if (API_BASE.includes('your-api-gateway-url')) {
+    console.error('API endpoint not configured. See src/pages/wedding/DEPLOYMENT.md for setup instructions.');
+  }
+
+  let isLoggedIn = false;
+  let lastSyncTime = 0;
+  const POLL_INTERVAL = 5000; // 5 seconds to stay within free tier
+  const DEBOUNCE_DELAY = 500;
+  let pendingUpdates = new Map();
+  let syncTimeoutId = null;
+
+  // ========== Authentication ==========
+  const loginScreen = document.getElementById('login-screen');
+  const checklistScreen = document.getElementById('checklist-screen');
+  const passwordInput = document.getElementById('password-input');
+  const loginBtn = document.getElementById('login-btn');
+  const loginError = document.getElementById('login-error');
+
+  // Check if already logged in
+  function checkSession() {
+    const session = sessionStorage.getItem('wedding-session');
+    if (session === 'authenticated') {
+      isLoggedIn = true;
+      loginScreen.style.display = 'none';
+      checklistScreen.style.display = 'block';
+      loadChecklistState();
+      startPolling();
+    }
+  }
+
+  loginBtn.addEventListener('click', attemptLogin);
+  passwordInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') attemptLogin();
+  });
+
+  function attemptLogin() {
+    const password = passwordInput.value;
+    if (password === correctPassword) {
+      sessionStorage.setItem('wedding-session', 'authenticated');
+      isLoggedIn = true;
+      loginError.classList.remove('show');
+      loginScreen.style.display = 'none';
+      checklistScreen.style.display = 'block';
+      loadChecklistState();
+      startPolling();
+    } else {
+      loginError.textContent = 'Incorrect password';
+      loginError.classList.add('show');
+      passwordInput.value = '';
+    }
+  }
+
+  // ========== Checklist Sync ==========
+  async function loadChecklistState() {
+    try {
+      const response = await fetch(`${API_BASE}/checklist`);
+      if (!response.ok) throw new Error('Failed to load checklist');
+      const items = await response.json();
+
+      // Update UI with fetched state
+      items.forEach((item) => {
+        const checkbox = document.getElementById(item.id);
+        if (checkbox) {
+          checkbox.checked = item.isChecked;
+        }
+      });
+
+      lastSyncTime = Date.now();
+    } catch (error) {
+      console.error('Error loading checklist:', error);
+      // Silently fail - use localStorage as fallback
+      loadFromLocalStorage();
+    }
+  }
+
+  function loadFromLocalStorage() {
+    const stored = localStorage.getItem('wedding-checklist');
+    if (stored) {
+      const items = JSON.parse(stored);
+      items.forEach(item => {
+        const checkbox = document.getElementById(item.id);
+        if (checkbox) checkbox.checked = item.isChecked;
+      });
+    }
+  }
+
+  async function updateChecklistItem(itemId, isChecked) {
+    // Optimistic update UI
+    const checkbox = document.getElementById(itemId);
+    if (checkbox) checkbox.checked = isChecked;
+
+    // Debounce API call - batch updates
+    clearTimeout(syncTimeoutId);
+    pendingUpdates.set(itemId, isChecked);
+
+    syncTimeoutId = setTimeout(async () => {
+      try {
+        // Send all pending updates
+        const updates = Array.from(pendingUpdates.entries()).map(([id, checked]) => ({
+          id,
+          isChecked: checked,
+        }));
+
+        for (const update of updates) {
+          await fetch(`${API_BASE}/checklist/${update.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isChecked: update.isChecked }),
+          });
+        }
+
+        pendingUpdates.clear();
+        saveToLocalStorage();
+      } catch (error) {
+        console.error('Error updating checklist:', error);
+        saveToLocalStorage(); // At least save locally
+      }
+    }, DEBOUNCE_DELAY);
+  }
+
+  function saveToLocalStorage() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][data-item-id]');
+    const items = Array.from(checkboxes).map(cb => ({
+      id: cb.id,
+      isChecked: cb.checked,
+    }));
+    localStorage.setItem('wedding-checklist', JSON.stringify(items));
+  }
+
+  function startPolling() {
+    // Poll every 5 seconds for updates from other users
+    setInterval(async () => {
+      try {
+        const response = await fetch(`${API_BASE}/checklist`);
+        if (!response.ok) throw new Error('Failed to poll checklist');
+        const items = await response.json();
+
+        // Update UI if any items changed
+        items.forEach((item) => {
+          const checkbox = document.getElementById(item.id);
+          if (checkbox && checkbox.checked !== item.isChecked) {
+            checkbox.checked = item.isChecked;
+          }
+        });
+
+        lastSyncTime = Date.now();
+      } catch (error) {
+        console.error('Error polling checklist:', error);
+      }
+    }, POLL_INTERVAL);
+  }
+
+  // ========== Event Listeners ==========
+  document.addEventListener('change', (e) => {
+    if (e.target.type === 'checkbox' && e.target.dataset.itemId) {
+      updateChecklistItem(e.target.id, e.target.checked);
+    }
+  });
+
+  // Initialize
+  checkSession();
+</script>
