@@ -231,6 +231,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     padding: 0;
   }
 
+  /* Override global overflow-hidden from BaseLayout */
+  body {
+    overflow: auto !important;
+  }
+
   /* Login Screen */
   #login-screen.login-container-outer {
     display: flex;
@@ -320,6 +325,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     font-size: 15px;
+    display: block;
+    width: 100%;
+  }
+
+  #wedding-app {
+    display: block;
+    width: 100%;
   }
 
   .site-header {
