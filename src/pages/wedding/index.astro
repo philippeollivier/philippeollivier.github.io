@@ -5,108 +5,204 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <BaseLayout title="Wedding Checklist">
   <div id="wedding-app">
     <!-- Password Login Screen -->
-    <div id="login-screen" class="login-container">
-      <div class="login-box">
-        <h1>Wedding Planning Checklist</h1>
-        <p>Enter password to access</p>
-        <input
-          id="password-input"
-          type="password"
-          placeholder="Password"
-          autocomplete="off"
-        />
-        <button id="login-btn">Unlock</button>
-        <p id="login-error" class="error-message"></p>
+    <div id="login-screen" class="login-container-outer">
+      <div class="login-container">
+        <div class="login-box">
+          <h1>Wedding Planning Checklist</h1>
+          <p>Enter password to access</p>
+          <input
+            id="password-input"
+            type="password"
+            placeholder="Password"
+            autocomplete="off"
+          />
+          <button id="login-btn">Unlock</button>
+          <p id="login-error" class="error-message"></p>
+        </div>
       </div>
     </div>
 
     <!-- Checklist Content (Hidden until logged in) -->
     <div id="checklist-screen" style="display: none;">
-      <!-- Marriage & Immigration Plan HTML -->
-      <div class="marriage-plan-container">
-        <header class="site-header">
-          <h1>Marriage & Immigration Plan</h1>
-          <p>NYC 2026</p>
-          <div class="header-tags">
-            <span class="header-tag">AOS Process</span>
-            <span class="header-tag">Shared Checklist</span>
+      <header class="site-header">
+        <h1>Marriage &amp; Immigration Plan</h1>
+        <p>US Citizen + Korean F1 Student — New York City, 2026</p>
+        <div class="header-tags">
+          <span class="header-tag">NYC Marriage License</span>
+          <span class="header-tag">Adjustment of Status (I-485)</span>
+          <span class="header-tag">Work Permit (I-765)</span>
+          <span class="header-tag">Advance Parole (I-131)</span>
+        </div>
+      </header>
+
+      <div class="container">
+        <!-- SITUATION SUMMARY -->
+        <p class="section-label">Situation Summary</p>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="label">Petitioner</div>
+            <div class="value">US Citizen — New York City</div>
           </div>
-        </header>
-
-        <div class="container">
-          <!-- Quick Reference Checklist -->
-          <p class="section-label">Quick Reference Checklist</p>
-          <div class="card">
-
-            <div class="checklist-section">
-              <h3>Before the Wedding</h3>
-              <ul class="checklist">
-                <li><input type="checkbox" id="c1" data-item-id="c1"><label for="c1">Create Project Cupid account and complete online application together at nyc.gov/cupid</label></li>
-                <li><input type="checkbox" id="c2" data-item-id="c2"><label for="c2">Book marriage license appointment — Monday 9:00 AM slot release at nyc.gov/cupid</label></li>
-                <li><input type="checkbox" id="c3" data-item-id="c3"><label for="c3">Book ceremony appointment at 141 Worth St. — same Monday 9:00 AM slot release</label></li>
-                <li><input type="checkbox" id="c4" data-item-id="c4"><label for="c4">Gather her documents: Korean passport + certified Korean birth certificate with English translation</label></li>
-                <li><input type="checkbox" id="c5" data-item-id="c5"><label for="c5">Gather your documents: US passport or birth certificate</label></li>
-              </ul>
-            </div>
-
-            <div class="checklist-section">
-              <h3>Right After the Wedding</h3>
-              <ul class="checklist">
-                <li><input type="checkbox" id="c6" data-item-id="c6"><label for="c6">Obtain certified copies of marriage certificate (order at least 3)</label></li>
-                <li><input type="checkbox" id="c7" data-item-id="c7"><label for="c7">Open a joint bank account together</label></li>
-                <li><input type="checkbox" id="c8" data-item-id="c8"><label for="c8">Add her name to lease, utility bills, or insurance</label></li>
-                <li><input type="checkbox" id="c9" data-item-id="c9"><label for="c9">Schedule civil surgeon appointment for I-693 medical exam (uscis.gov/civil-surgeons)</label></li>
-                <li><input type="checkbox" id="c10" data-item-id="c10"><label for="c10">Begin collecting and organizing marriage evidence (photos, communication, shared accounts)</label></li>
-              </ul>
-            </div>
-
-            <div class="checklist-section">
-              <h3>AOS Package Preparation</h3>
-              <ul class="checklist">
-                <li><input type="checkbox" id="c11" data-item-id="c11"><label for="c11">Complete Form I-130 (you) + I-130A (her)</label></li>
-                <li><input type="checkbox" id="c12" data-item-id="c12"><label for="c12">Complete Form I-485 (her — green card application)</label></li>
-                <li><input type="checkbox" id="c13" data-item-id="c13"><label for="c13">Complete Form I-765 (her — work permit/EAD, category c9)</label></li>
-                <li><input type="checkbox" id="c14" data-item-id="c14"><label for="c14">Complete Form I-131 (her — Advance Parole/travel)</label></li>
-                <li><input type="checkbox" id="c15" data-item-id="c15"><label for="c15">Complete Form I-864 (you — Affidavit of Support with tax returns, pay stubs, employer letter)</label></li>
-                <li><input type="checkbox" id="c16" data-item-id="c16"><label for="c16">Obtain sealed I-693 envelope from civil surgeon — do not open</label></li>
-                <li><input type="checkbox" id="c17" data-item-id="c17"><label for="c17">Write cover letter addressing O1 denial with denial notice copy attached</label></li>
-                <li><input type="checkbox" id="c18" data-item-id="c18"><label for="c18">Assemble complete marriage evidence package</label></li>
-                <li><input type="checkbox" id="c19" data-item-id="c19"><label for="c19">Complete payment forms: G-1450 or G-1650 for each form requiring a fee</label></li>
-              </ul>
-            </div>
-
-            <div class="checklist-section">
-              <h3>Filing</h3>
-              <ul class="checklist">
-                <li><input type="checkbox" id="c20" data-item-id="c20"><label for="c20">Verify current USCIS lockbox mailing address at uscis.gov (check the day you mail)</label></li>
-                <li><input type="checkbox" id="c21" data-item-id="c21"><label for="c21">Make a complete photocopy of the entire package before mailing</label></li>
-                <li><input type="checkbox" id="c22" data-item-id="c22"><label for="c22">Mail via USPS Priority Mail with tracking, FedEx, or UPS</label></li>
-                <li><input type="checkbox" id="c23" data-item-id="c23"><label for="c23">Save the tracking number and all confirmation receipts</label></li>
-                <li><input type="checkbox" id="c24" data-item-id="c24"><label for="c24">She does NOT travel internationally after this point until Advance Parole is in hand</label></li>
-              </ul>
-            </div>
-
-            <div class="checklist-section">
-              <h3>After Filing</h3>
-              <ul class="checklist">
-                <li><input type="checkbox" id="c25" data-item-id="c25"><label for="c25">Watch for receipt notices (I-797C) within 2–4 weeks — one per form</label></li>
-                <li><input type="checkbox" id="c26" data-item-id="c26"><label for="c26">Attend biometrics appointment when notice arrives (do not miss)</label></li>
-                <li><input type="checkbox" id="c27" data-item-id="c27"><label for="c27">EAD card arrives — she can begin working only after physical card is in hand</label></li>
-                <li><input type="checkbox" id="c28" data-item-id="c28"><label for="c28">Prepare for I-485 interview — organize binders with originals of all documents</label></li>
-                <li><input type="checkbox" id="c29" data-item-id="c29"><label for="c29">Attend interview at 26 Federal Plaza — both of you required</label></li>
-                <li><input type="checkbox" id="c30" data-item-id="c30"><label for="c30">File I-751 during the 90-day window before the 2-year conditional green card expires</label></li>
-              </ul>
-            </div>
-
+          <div class="summary-item">
+            <div class="label">Beneficiary</div>
+            <div class="value">Korean Citizen — F1 Student Visa</div>
           </div>
-
+          <div class="summary-item">
+            <div class="label">I-20 Program End</div>
+            <div class="value">April 30, 2026</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">F1 Grace Period Ends</div>
+            <div class="value">June 29, 2026</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Current Status</div>
+            <div class="value">Enrolled, fully compliant, no violations</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Prior Immigration Issue</div>
+            <div class="value">O1 denial — must be disclosed on I-485, does not bar AOS</div>
+          </div>
         </div>
 
-        <footer>
-          Compiled March 2026. This document is for informational purposes only and does not constitute legal advice.<br>
-          Verify all USCIS fees and addresses at <strong>uscis.gov</strong> before filing. Immigration laws change — consult a licensed immigration attorney for guidance specific to your situation.
-        </footer>
+        <div class="alert alert-info">
+          <div class="alert-icon">ℹ️</div>
+          <div class="alert-body">
+            <div class="alert-title">Green Card Path: Immediate Relative of US Citizen</div>
+            <div class="alert-text">As the spouse of a US citizen, she qualifies as an <strong>immediate relative</strong> — the fastest green card category with no visa number wait, no annual quota, and no waiting list. She can file Adjustment of Status (AOS) to remain in the US throughout the process without needing to return to Korea.</div>
+          </div>
+        </div>
+
+        <!-- CRITICAL DEADLINES -->
+        <p class="section-label">Critical Deadlines</p>
+        <div class="card">
+          <div class="deadline-list">
+            <div class="deadline-item">
+              <div class="deadline-date">
+                <div class="date">Mar 6, 2026</div>
+                <div class="day">Today</div>
+              </div>
+              <div class="deadline-dot normal"></div>
+              <div class="deadline-content">
+                <div class="title">Start Now</div>
+                <div class="desc">Book marriage license appointment this Monday at 9:00 AM EST on nyc.gov/cupid — spring slots go fast.</div>
+              </div>
+            </div>
+
+            <div class="deadline-item">
+              <div class="deadline-date">
+                <div class="date">Apr 30, 2026</div>
+                <div class="day">Target Deadline</div>
+              </div>
+              <div class="deadline-dot target"></div>
+              <div class="deadline-content">
+                <div class="title">Target: Married + AOS Filed <span class="tag tag-success">Ideal</span></div>
+                <div class="desc">Her I-20 program ends. Filing AOS while still in active F1 status is the cleanest scenario — no grace period complications.</div>
+              </div>
+            </div>
+
+            <div class="deadline-item">
+              <div class="deadline-date">
+                <div class="date">Jun 29, 2026</div>
+                <div class="day">Hard Deadline</div>
+              </div>
+              <div class="deadline-dot urgent"></div>
+              <div class="deadline-content">
+                <div class="title">Grace Period Ends — Absolute Deadline to File AOS <span class="tag tag-warn">Do Not Miss</span></div>
+                <div class="desc">After this date, unlawful presence begins accruing. File the complete I-485 package before this date. Do not wait.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOTAL COSTS -->
+        <p class="section-label">Total Costs</p>
+        <div class="card">
+          <table class="cost-table">
+            <tr><td class="cost-category" colspan="2">NYC Marriage</td></tr>
+            <tr><td>Marriage License (NYC City Clerk)</td><td>$35</td></tr>
+            <tr><td>Civil Ceremony at 141 Worth St.</td><td>$25</td></tr>
+            <tr><td class="cost-category" colspan="2">USCIS Filing Fees</td></tr>
+            <tr><td>Form I-130 — Petition for Alien Relative (paper)</td><td>$675</td></tr>
+            <tr><td>Form I-485 — Adjustment of Status</td><td>$1,440</td></tr>
+            <tr><td>Form I-765 — Work Permit (EAD)</td><td>$260</td></tr>
+            <tr><td>Form I-131 — Advance Parole (Travel)</td><td>$630</td></tr>
+            <tr><td class="cost-category" colspan="2">Medical</td></tr>
+            <tr><td>I-693 Medical Exam (USCIS Civil Surgeon, NYC)</td><td>$200–$650</td></tr>
+            <tr class="subtotal"><td>USCIS Fees Subtotal</td><td>$3,005</td></tr>
+            <tr class="total"><td>Estimated Total (excl. attorney)</td><td>~$3,265–$3,715</td></tr>
+          </table>
+        </div>
+
+        <!-- QUICK REFERENCE CHECKLIST -->
+        <p class="section-label">Quick Reference Checklist</p>
+        <div class="card">
+          <div class="checklist-section">
+            <h3>Before the Wedding</h3>
+            <ul class="checklist">
+              <li><input type="checkbox" id="c1" data-item-id="c1"><label for="c1">Create Project Cupid account and complete online application together at nyc.gov/cupid</label></li>
+              <li><input type="checkbox" id="c2" data-item-id="c2"><label for="c2">Book marriage license appointment — Monday 9:00 AM slot release at nyc.gov/cupid</label></li>
+              <li><input type="checkbox" id="c3" data-item-id="c3"><label for="c3">Book ceremony appointment at 141 Worth St. — same Monday 9:00 AM slot release</label></li>
+              <li><input type="checkbox" id="c4" data-item-id="c4"><label for="c4">Gather her documents: Korean passport + certified Korean birth certificate with English translation</label></li>
+              <li><input type="checkbox" id="c5" data-item-id="c5"><label for="c5">Gather your documents: US passport or birth certificate</label></li>
+            </ul>
+          </div>
+
+          <div class="checklist-section">
+            <h3>Right After the Wedding</h3>
+            <ul class="checklist">
+              <li><input type="checkbox" id="c6" data-item-id="c6"><label for="c6">Obtain certified copies of marriage certificate (order at least 3)</label></li>
+              <li><input type="checkbox" id="c7" data-item-id="c7"><label for="c7">Open a joint bank account together</label></li>
+              <li><input type="checkbox" id="c8" data-item-id="c8"><label for="c8">Add her name to lease, utility bills, or insurance</label></li>
+              <li><input type="checkbox" id="c9" data-item-id="c9"><label for="c9">Schedule civil surgeon appointment for I-693 medical exam (uscis.gov/civil-surgeons)</label></li>
+              <li><input type="checkbox" id="c10" data-item-id="c10"><label for="c10">Begin collecting and organizing marriage evidence (photos, communication, shared accounts)</label></li>
+            </ul>
+          </div>
+
+          <div class="checklist-section">
+            <h3>AOS Package Preparation</h3>
+            <ul class="checklist">
+              <li><input type="checkbox" id="c11" data-item-id="c11"><label for="c11">Complete Form I-130 (you) + I-130A (her)</label></li>
+              <li><input type="checkbox" id="c12" data-item-id="c12"><label for="c12">Complete Form I-485 (her — green card application)</label></li>
+              <li><input type="checkbox" id="c13" data-item-id="c13"><label for="c13">Complete Form I-765 (her — work permit/EAD, category c9)</label></li>
+              <li><input type="checkbox" id="c14" data-item-id="c14"><label for="c14">Complete Form I-131 (her — Advance Parole/travel)</label></li>
+              <li><input type="checkbox" id="c15" data-item-id="c15"><label for="c15">Complete Form I-864 (you — Affidavit of Support with tax returns, pay stubs, employer letter)</label></li>
+              <li><input type="checkbox" id="c16" data-item-id="c16"><label for="c16">Obtain sealed I-693 envelope from civil surgeon — do not open</label></li>
+              <li><input type="checkbox" id="c17" data-item-id="c17"><label for="c17">Write cover letter addressing O1 denial with denial notice copy attached</label></li>
+              <li><input type="checkbox" id="c18" data-item-id="c18"><label for="c18">Assemble complete marriage evidence package</label></li>
+              <li><input type="checkbox" id="c19" data-item-id="c19"><label for="c19">Complete payment forms: G-1450 or G-1650 for each form requiring a fee</label></li>
+            </ul>
+          </div>
+
+          <div class="checklist-section">
+            <h3>Filing</h3>
+            <ul class="checklist">
+              <li><input type="checkbox" id="c20" data-item-id="c20"><label for="c20">Verify current USCIS lockbox mailing address at uscis.gov (check the day you mail)</label></li>
+              <li><input type="checkbox" id="c21" data-item-id="c21"><label for="c21">Make a complete photocopy of the entire package before mailing</label></li>
+              <li><input type="checkbox" id="c22" data-item-id="c22"><label for="c22">Mail via USPS Priority Mail with tracking, FedEx, or UPS</label></li>
+              <li><input type="checkbox" id="c23" data-item-id="c23"><label for="c23">Save the tracking number and all confirmation receipts</label></li>
+              <li><input type="checkbox" id="c24" data-item-id="c24"><label for="c24">She does NOT travel internationally after this point until Advance Parole is in hand</label></li>
+            </ul>
+          </div>
+
+          <div class="checklist-section">
+            <h3>After Filing</h3>
+            <ul class="checklist">
+              <li><input type="checkbox" id="c25" data-item-id="c25"><label for="c25">Watch for receipt notices (I-797C) within 2–4 weeks — one per form</label></li>
+              <li><input type="checkbox" id="c26" data-item-id="c26"><label for="c26">Attend biometrics appointment when notice arrives (do not miss)</label></li>
+              <li><input type="checkbox" id="c27" data-item-id="c27"><label for="c27">EAD card arrives — she can begin working only after physical card is in hand</label></li>
+              <li><input type="checkbox" id="c28" data-item-id="c28"><label for="c28">Prepare for I-485 interview — organize binders with originals of all documents</label></li>
+              <li><input type="checkbox" id="c29" data-item-id="c29"><label for="c29">Attend interview at 26 Federal Plaza — both of you required</label></li>
+              <li><input type="checkbox" id="c30" data-item-id="c30"><label for="c30">File I-751 during the 90-day window before the 2-year conditional green card expires</label></li>
+            </ul>
+          </div>
+        </div>
       </div>
+
+      <footer>
+        Compiled March 2026. This document is for informational purposes only and does not constitute legal advice.<br>
+        Verify all USCIS fees and addresses at <strong>uscis.gov</strong> before filing. Immigration laws change — consult a licensed immigration attorney for guidance specific to your situation.
+      </footer>
     </div>
   </div>
 </BaseLayout>
@@ -135,21 +231,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     padding: 0;
   }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    font-size: 15px;
-  }
-
   /* Login Screen */
-  .login-container {
+  #login-screen.login-container-outer {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+  }
+
+  .login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 
   .login-box {
@@ -207,10 +302,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     background: var(--accent-dark);
   }
 
-  .login-box button:active {
-    transform: scale(0.98);
-  }
-
   .error-message {
     color: var(--warn);
     font-size: 0.85rem;
@@ -223,6 +314,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   /* Checklist Content */
+  #checklist-screen {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
   .site-header {
     background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
     color: white;
@@ -275,6 +374,71 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     margin-top: 48px;
   }
 
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .summary-item {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .summary-item .label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--neutral);
+    margin-bottom: 4px;
+  }
+
+  .summary-item .value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .alert {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .alert-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .alert-body {
+    flex: 1;
+  }
+
+  .alert-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+
+  .alert-text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .alert-info {
+    background: var(--accent-light);
+    border: 1px solid #b8d0e8;
+    color: var(--accent-dark);
+  }
+
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -283,8 +447,159 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     margin-bottom: 16px;
   }
 
+  .deadline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .deadline-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .deadline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 68px;
+    top: 36px;
+    bottom: -12px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .deadline-date {
+    min-width: 120px;
+    text-align: right;
+    padding-top: 10px;
+  }
+
+  .deadline-date .date {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .deadline-date .day {
+    font-size: 0.72rem;
+    color: var(--neutral);
+  }
+
+  .deadline-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: white;
+    flex-shrink: 0;
+    margin-top: 13px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .deadline-dot.urgent {
+    border-color: var(--warn);
+    background: var(--warn);
+  }
+
+  .deadline-dot.target {
+    border-color: var(--success);
+    background: var(--success);
+  }
+
+  .deadline-dot.normal {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  .deadline-content {
+    flex: 1;
+    padding: 8px 0 20px;
+  }
+
+  .deadline-content .title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+  }
+
+  .deadline-content .desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .tag-success {
+    background: var(--success-light);
+    color: var(--success);
+    border: 1px solid #a7d4b8;
+  }
+
+  .tag-warn {
+    background: var(--warn-light);
+    color: var(--warn);
+    border: 1px solid #f4c09a;
+  }
+
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .cost-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cost-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .cost-table td {
+    padding: 10px 8px;
+  }
+
+  .cost-table td:last-child {
+    text-align: right;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cost-table .cost-category {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--neutral);
+    padding: 14px 8px 4px !important;
+  }
+
+  .cost-table .subtotal {
+    border-top: 2px solid var(--border);
+    font-weight: 700;
+    background: var(--surface-alt);
+  }
+
+  .cost-table .total {
+    background: var(--accent-light);
+    font-weight: 700;
+    color: var(--accent-dark);
+    font-size: 1rem;
+  }
+
   .checklist-section {
-    margin-bottom: 28px;
+    margin-bottom: 20px;
   }
 
   .checklist-section:last-child {
@@ -292,79 +607,81 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .checklist-section h3 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: var(--accent-dark);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--neutral);
+    margin-bottom: 10px;
   }
 
   .checklist {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
   }
 
   .checklist li {
     display: flex;
-    gap: 12px;
     align-items: flex-start;
+    gap: 10px;
+    font-size: 0.875rem;
+    line-height: 1.45;
   }
 
   .checklist li input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    margin-top: 2px;
-    cursor: pointer;
+    width: 16px;
+    height: 16px;
     accent-color: var(--accent);
     flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
   }
 
   .checklist li label {
     cursor: pointer;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    flex: 1;
+    color: var(--text-muted);
   }
 
-  .checklist li input[type="checkbox"]:checked + label {
-    color: var(--text-muted);
+  .checklist li input:checked + label {
     text-decoration: line-through;
+    color: #aaa;
   }
 
   footer {
-    padding: 40px 32px;
     text-align: center;
-    background: var(--surface-alt);
+    padding: 32px;
+    font-size: 0.78rem;
+    color: var(--neutral);
     border-top: 1px solid var(--border);
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.6;
+    margin-top: 40px;
   }
 
   footer strong {
     font-weight: 600;
   }
+
+  @media (max-width: 640px) {
+    .site-header h1 {
+      font-size: 1.5rem;
+    }
+    .container {
+      padding: 24px 16px 60px;
+    }
+  }
 </style>
 
 <script define:vars={{ correctPassword: 'phiji' }}>
-  // TODO: Replace with your API Gateway endpoint from SAM deployment
-  // Get this from: sam deploy output (ChecklistApi endpoint)
   const API_BASE = 'https://your-api-gateway-url.execute-api.us-east-1.amazonaws.com/prod';
 
-  // Check if API endpoint is configured
   if (API_BASE.includes('your-api-gateway-url')) {
     console.error('API endpoint not configured. See src/pages/wedding/DEPLOYMENT.md for setup instructions.');
   }
 
   let isLoggedIn = false;
   let lastSyncTime = 0;
-  const POLL_INTERVAL = 5000; // 5 seconds to stay within free tier
+  const POLL_INTERVAL = 5000;
   const DEBOUNCE_DELAY = 500;
   let pendingUpdates = new Map();
   let syncTimeoutId = null;
@@ -376,7 +693,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   const loginBtn = document.getElementById('login-btn');
   const loginError = document.getElementById('login-error');
 
-  // Check if already logged in
   function checkSession() {
     const session = sessionStorage.getItem('wedding-session');
     if (session === 'authenticated') {
@@ -417,7 +733,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       if (!response.ok) throw new Error('Failed to load checklist');
       const items = await response.json();
 
-      // Update UI with fetched state
       items.forEach((item) => {
         const checkbox = document.getElementById(item.id);
         if (checkbox) {
@@ -428,7 +743,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       lastSyncTime = Date.now();
     } catch (error) {
       console.error('Error loading checklist:', error);
-      // Silently fail - use localStorage as fallback
       loadFromLocalStorage();
     }
   }
@@ -445,17 +759,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   async function updateChecklistItem(itemId, isChecked) {
-    // Optimistic update UI
     const checkbox = document.getElementById(itemId);
     if (checkbox) checkbox.checked = isChecked;
 
-    // Debounce API call - batch updates
     clearTimeout(syncTimeoutId);
     pendingUpdates.set(itemId, isChecked);
 
     syncTimeoutId = setTimeout(async () => {
       try {
-        // Send all pending updates
         const updates = Array.from(pendingUpdates.entries()).map(([id, checked]) => ({
           id,
           isChecked: checked,
@@ -473,7 +784,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         saveToLocalStorage();
       } catch (error) {
         console.error('Error updating checklist:', error);
-        saveToLocalStorage(); // At least save locally
+        saveToLocalStorage();
       }
     }, DEBOUNCE_DELAY);
   }
@@ -488,14 +799,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   function startPolling() {
-    // Poll every 5 seconds for updates from other users
     setInterval(async () => {
       try {
         const response = await fetch(`${API_BASE}/checklist`);
         if (!response.ok) throw new Error('Failed to poll checklist');
         const items = await response.json();
 
-        // Update UI if any items changed
         items.forEach((item) => {
           const checkbox = document.getElementById(item.id);
           if (checkbox && checkbox.checked !== item.isChecked) {
@@ -517,6 +826,5 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
   });
 
-  // Initialize
   checkSession();
 </script>
