@@ -685,11 +685,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </style>
 
 <script define:vars={{ correctPassword: 'phiji' }}>
-  const API_BASE = 'https://your-api-gateway-url.execute-api.us-east-1.amazonaws.com/prod';
-
-  if (API_BASE.includes('your-api-gateway-url')) {
-    console.error('API endpoint not configured. See src/pages/wedding/DEPLOYMENT.md for setup instructions.');
-  }
+  const API_BASE = 'https://eqrd2tk9k2.execute-api.us-east-1.amazonaws.com/dev';
 
   let isLoggedIn = false;
   let lastSyncTime = 0;
