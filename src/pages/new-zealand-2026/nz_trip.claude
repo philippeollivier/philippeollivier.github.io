@@ -1,8 +1,0 @@
-Take the schedule.claude with my trip itinerary and build me a beautiful, mobile-friendly, state of the art UI design, travel website I can pull up on my phone while I'm on the go. I'll deploy on the github pages that this folder exists under — determine the best, eye pleasing design to use, and don't reuse any existing styling or fonts that exist on other pages within this repo. We want this to be a standalone page that is well crafted and designed.
-
-The site should have:  
-- A day-by-day timeline with everything scheduled (activities, meals, transport, hotels)
-- Google Maps links for every location
-- A quick reference section with hotel addresses (copyable for showing taxi drivers), emergency.numbers, and useful local phrases
-- A sticky nav so I can jump between days fast  
-- A design that matches the vibe of the destination
