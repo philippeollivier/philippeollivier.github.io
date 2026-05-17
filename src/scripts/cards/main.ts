@@ -30,10 +30,15 @@ const CARD_H = CARD_W / CARD_ASPECT_PX;
 const MTG_CORNER_FRAC = 0.0505;
 const CARD_CORNER_RADIUS = MTG_CORNER_FRAC * (CARD_W / CARD_H);
 
-// Horizontal stack: each card offset from focus by SPACING in x; left cards stack on top.
-const STACK_SPACING = 0.30;      // fraction of CARD_W between adjacent card centers (70% overlap)
-const FADE_START = 5;            // offsets within this stay fully opaque
-const FADE_END = 9;              // offsets beyond this are fully hidden
+// Horizontal stack (cover-flow style): each card offset from focus by SPACING in x;
+// neighboring cards rotate around vertical axis to face toward focus.
+const STACK_SPACING = 0.32;      // fraction of CARD_W between adjacent card centers
+const STACK_ROT_AMPLITUDE = 0.55; // max rotation.y in radians (~31°) at far offsets
+const STACK_ROT_SHAPE = 0.7;     // controls how sharply rotation grows from focus (tanh shape param)
+const STACK_Z_PER_OFFSET = 0.07; // distant cards sit slightly back for depth
+const FOCUS_Z_POP = 0.20;        // focused card pops forward by this much
+const FADE_START = 5;
+const FADE_END = 9;
 
 interface CardInstance {
   data: CardData;
@@ -42,11 +47,17 @@ interface CardInstance {
   material: THREE.ShaderMaterial;
 }
 
-const INSPECT_Z = 3.2;
-const INSPECT_SCALE = 1.45;
+// Inspect settings — desktop / landscape
+const INSPECT_Z_DESKTOP = 3.2;
+const INSPECT_SCALE_DESKTOP = 1.45;
+const INSPECT_X_LANDSCAPE = -1.2;
+
+// Inspect settings — mobile / portrait (card fits with room for text below)
+const INSPECT_Z_MOBILE = 1.4;
+const INSPECT_SCALE_MOBILE = 1.4;
+
 const INSPECT_TILT_Y = 0.45;       // max rad
 const INSPECT_TILT_X = 0.30;
-const INSPECT_X_LANDSCAPE = -1.2;  // shift card left when text is on right
 const LANDSCAPE_ASPECT = 1.15;     // viewport aspect threshold for landscape layout
 
 export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
@@ -65,6 +76,8 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
     const h = container.clientHeight || window.innerHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
+    // Pull camera back on narrow / portrait viewports so cards aren't oversized on phones
+    camera.position.z = camera.aspect < LANDSCAPE_ASPECT ? 10 : 8;
     camera.updateProjectionMatrix();
   }
   resize();
@@ -243,20 +256,26 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
     pointer.x = damp(pointer.x, pointerTarget.x, 10, dt);
     pointer.y = damp(pointer.y, pointerTarget.y, 10, dt);
 
-    const inspectTargetX = isLandscape() ? INSPECT_X_LANDSCAPE : 0;
+    const landscape = isLandscape();
+    const inspectTargetX = landscape ? INSPECT_X_LANDSCAPE : 0;
+    const inspectTargetZ = landscape ? INSPECT_Z_DESKTOP : INSPECT_Z_MOBILE;
+    const inspectTargetScale = landscape ? INSPECT_SCALE_DESKTOP : INSPECT_SCALE_MOBILE;
 
     for (const card of cards) {
       const offset = card.index - focusIndex;
       const absOff = Math.abs(offset);
 
-      // Horizontal stack: cards spaced along x, all parallel
+      // ---- cover-flow stack layout ----
       const stackX = offset * CARD_W * STACK_SPACING;
       const stackY = 0;
-      // Tiny z stagger so depth-test never z-fights with renderOrder
-      const stackZ = -card.index * 0.002;
-      // Subtle "pop" of focus: very small scale bump on the focused card
-      const focusBoost = Math.exp(-absOff * absOff * 1.2) * 0.08;
-      const stackScale = 1.0 + focusBoost;
+      // Distant cards sit slightly back; focus pops forward
+      const focusBoost = Math.exp(-absOff * absOff * 1.2);
+      const stackZ = -absOff * STACK_Z_PER_OFFSET + focusBoost * FOCUS_Z_POP;
+      // Y-rotation: cards rotate around vertical axis to face toward focus.
+      // tanh easing → first neighbor noticeable, far ones approach the amplitude limit.
+      const stackRotY = -Math.tanh(offset * STACK_ROT_SHAPE) * STACK_ROT_AMPLITUDE;
+      // Subtle scale pop on focus
+      const stackScale = 1.0 + focusBoost * 0.10;
       const stackFade = clamp(1 - (absOff - FADE_START) / (FADE_END - FADE_START), 0, 1);
 
       const isInspected = card.index === inspectIndex;
@@ -265,18 +284,18 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
       if (isInspected) {
         card.mesh.position.x = lerp(stackX, inspectTargetX, t);
         card.mesh.position.y = lerp(stackY, 0, t);
-        card.mesh.position.z = lerp(stackZ, INSPECT_Z, t);
+        card.mesh.position.z = lerp(stackZ, inspectTargetZ, t);
         card.mesh.rotation.x = lerp(0, -pointer.y * INSPECT_TILT_X, t);
-        card.mesh.rotation.y = lerp(0, pointer.x * INSPECT_TILT_Y, t);
+        card.mesh.rotation.y = lerp(stackRotY, pointer.x * INSPECT_TILT_Y, t);
         card.mesh.rotation.z = 0;
-        card.mesh.scale.setScalar(lerp(stackScale, INSPECT_SCALE, t));
+        card.mesh.scale.setScalar(lerp(stackScale, inspectTargetScale, t));
         card.material.uniforms.uOpacity.value = 1;
         card.material.uniforms.uInspectAmt.value = t;
         card.material.visible = true;
         card.mesh.renderOrder = 100000;
       } else {
         card.mesh.position.set(stackX, stackY, stackZ);
-        card.mesh.rotation.set(0, 0, 0);
+        card.mesh.rotation.set(0, stackRotY, 0);
         card.mesh.scale.setScalar(stackScale);
         const op = stackFade * (1 - t * 0.95);
         card.material.uniforms.uOpacity.value = op;
