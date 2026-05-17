@@ -1,0 +1,282 @@
+---
+// Standalone page — does not use BaseLayout (which forces light theme + Redaction font)
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Cards — Philippe Ollivier</title>
+  </head>
+  <body class="cards-body">
+    <main class="stage">
+      <header class="masthead">
+        <a class="back-link" href="/">← Home</a>
+        <div class="title-block">
+          <p class="eyebrow">Project 01 · Collaborative Deck</p>
+          <h1 class="title">The Deck of Many Things</h1>
+          <p class="subtitle">A 22-card set illustrated by nine artists across a year of game nights.</p>
+        </div>
+      </header>
+
+      <div id="stage-canvas" class="canvas-wrap"></div>
+
+      <div id="card-overlay" class="overlay">
+        <div class="overlay-text">
+          <p class="overlay-eyebrow">Now viewing</p>
+          <h2 id="overlay-name" class="overlay-name">—</h2>
+          <p class="overlay-artist">Illustrated by <span id="overlay-artist">—</span></p>
+          <p class="overlay-dismiss">Click anywhere or press Esc to close</p>
+        </div>
+      </div>
+
+      <p id="hint" class="hint">
+        <span class="hint-row"><kbd>drag</kbd> · <kbd>scroll</kbd> · <kbd>← →</kbd> to browse</span>
+        <span class="hint-row"><kbd>click</kbd> the focused card to inspect</span>
+      </p>
+    </main>
+
+    <style is:global>
+      :root {
+        --bg-0: #07070b;
+        --bg-1: #14141c;
+        --text-0: #f4f4f8;
+        --text-1: #b8b8c4;
+        --text-2: #6e6e7c;
+        --accent: #cbb3ff;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: radial-gradient(ellipse at 50% 35%, var(--bg-1) 0%, var(--bg-0) 65%, #000 100%);
+        color: var(--text-0);
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow: hidden;
+        overscroll-behavior: none;
+      }
+
+      body.cards-body {
+        height: 100dvh;
+      }
+
+      .stage {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        overflow: hidden;
+      }
+
+      .masthead {
+        padding: 28px 40px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        pointer-events: none;
+      }
+
+      .back-link {
+        align-self: flex-start;
+        color: var(--text-2);
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 0.02em;
+        pointer-events: auto;
+        transition: color 0.2s ease;
+      }
+      .back-link:hover { color: var(--text-0); }
+
+      .title-block {
+        max-width: 720px;
+        margin: 6px auto 0;
+        text-align: center;
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-2);
+        font-weight: 500;
+      }
+
+      .title {
+        margin: 0 0 8px;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.05;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        background: linear-gradient(180deg, #ffffff 0%, #cdcde0 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .subtitle {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.45;
+        color: var(--text-1);
+        font-weight: 400;
+      }
+
+      .canvas-wrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+        cursor: grab;
+      }
+      .canvas-wrap:active { cursor: grabbing; }
+      .canvas-wrap canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.45s ease;
+        z-index: 10;
+      }
+      .overlay.is-active { opacity: 1; }
+
+      /* Landscape / wide viewports: text panel on the right of the card */
+      .overlay-text {
+        position: absolute;
+        top: 50%;
+        right: 6%;
+        transform: translateY(-50%) translateX(12px);
+        max-width: 320px;
+        text-align: left;
+        transition: transform 0.45s ease;
+      }
+      .overlay.is-active .overlay-text {
+        transform: translateY(-50%) translateX(0);
+      }
+
+      /* Portrait / narrow viewports: text below the card */
+      @media (max-aspect-ratio: 1149/1000), (max-width: 720px) {
+        .overlay-text {
+          top: auto;
+          right: 0;
+          left: 0;
+          bottom: 7%;
+          margin: 0 auto;
+          max-width: 88%;
+          text-align: center;
+          transform: translateY(12px);
+        }
+        .overlay.is-active .overlay-text { transform: translateY(0); }
+      }
+
+      .overlay-eyebrow {
+        margin: 0 0 6px;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      .overlay-name {
+        margin: 0 0 6px;
+        font-size: clamp(24px, 3.4vw, 36px);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text-0);
+      }
+
+      .overlay-artist {
+        margin: 0 0 10px;
+        font-size: 14px;
+        color: var(--text-1);
+      }
+      .overlay-artist span {
+        color: var(--text-0);
+        font-weight: 500;
+      }
+
+      .overlay-dismiss {
+        margin: 0;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--text-2);
+        text-transform: uppercase;
+      }
+
+      .hint {
+        position: fixed;
+        bottom: 22px;
+        left: 0;
+        right: 0;
+        margin: 0;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-2);
+        line-height: 1.6;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+        z-index: 5;
+      }
+      .hint.is-hidden { opacity: 0; }
+      .hint-row { display: block; }
+      .hint kbd {
+        display: inline-block;
+        padding: 2px 7px;
+        margin: 0 2px;
+        border: 1px solid #2c2c38;
+        border-radius: 5px;
+        background: #15151c;
+        color: var(--text-1);
+        font-family: inherit;
+        font-size: 10.5px;
+        letter-spacing: 0.04em;
+      }
+
+      @media (max-width: 600px) {
+        .masthead { padding: 20px 20px 0; }
+        .hint { bottom: 16px; }
+        .overlay { padding-bottom: 80px; }
+      }
+    </style>
+
+    <script>
+      import { mountCards } from '../scripts/cards/main';
+
+      function init() {
+        const container = document.getElementById('stage-canvas');
+        const overlayRoot = document.getElementById('card-overlay');
+        const overlayName = document.getElementById('overlay-name');
+        const overlayArtist = document.getElementById('overlay-artist');
+        const hint = document.getElementById('hint');
+        if (!container || !overlayRoot || !overlayName || !overlayArtist || !hint) return;
+        mountCards(container, {
+          root: overlayRoot,
+          name: overlayName,
+          artist: overlayArtist,
+          hint,
+        });
+      }
+
+      // <script type="module"> is deferred, so DOM is parsed by now.
+      // Run directly; no need for astro:page-load (which only fires when ClientRouter is mounted).
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    </script>
+  </body>
+</html>
