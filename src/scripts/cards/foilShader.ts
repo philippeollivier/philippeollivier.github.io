@@ -100,12 +100,13 @@ export const foilFragmentShader = /* glsl */ `
     float sparkle = smoothstep(0.92, 1.0, n) * (0.30 + 0.35 * fr);
 
     // Intensity in sRGB display space — values are intuitive (0.05 = subtle, 0.20 = strong)
-    float baseIntensity = 0.05 + 0.10 * fr;
+    // Scaled 1.5× for a stronger holographic feel.
+    float baseIntensity = 0.075 + 0.15 * fr;
     float intensity = baseIntensity * (0.65 + 0.35 * uInspectAmt);
 
     // PURE ADDITIVE composition — every term only adds light, never subtracts.
     vec3 glare = holo * intensity * (0.50 + 0.65 * wave)
-               + vec3(sparkle) * (0.10 + 0.12 * uInspectAmt);
+               + vec3(sparkle) * (0.15 + 0.18 * uInspectAmt);
 
     vec3 outColor = clamp(base + glare, 0.0, 1.0);
 

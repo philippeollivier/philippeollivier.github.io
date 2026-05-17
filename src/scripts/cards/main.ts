@@ -30,15 +30,14 @@ const CARD_H = CARD_W / CARD_ASPECT_PX;
 const MTG_CORNER_FRAC = 0.0505;
 const CARD_CORNER_RADIUS = MTG_CORNER_FRAC * (CARD_W / CARD_H);
 
-// Horizontal stack (cover-flow style): each card offset from focus by SPACING in x;
-// neighboring cards rotate around vertical axis to face toward focus.
-const STACK_SPACING = 0.32;      // fraction of CARD_W between adjacent card centers
-const STACK_ROT_AMPLITUDE = 0.55; // max rotation.y in radians (~31°) at far offsets
-const STACK_ROT_SHAPE = 0.7;     // controls how sharply rotation grows from focus (tanh shape param)
-const STACK_Z_PER_OFFSET = 0.07; // distant cards sit slightly back for depth
-const FOCUS_Z_POP = 0.20;        // focused card pops forward by this much
-const FADE_START = 5;
-const FADE_END = 9;
+// Looping horizontal carousel: consistent X-spacing, no rotation. Each card sits
+// at offset · SPACING · CARD_W from the focus. The deck wraps modulo N so dragging
+// past the last card loops back to the first — the wrap boundary is in the faded
+// (invisible) zone so the teleport never shows.
+const STACK_SPACING = 1.1;    // > 1.0 = clear gap between adjacent cards (no overlap)
+const FADE_START = 2;
+const FADE_END = 3.5;
+const AUTO_SCROLL_SPEED = 0.25; // cards per second; runs until first user input
 
 interface CardInstance {
   data: CardData;
@@ -47,23 +46,28 @@ interface CardInstance {
   material: THREE.ShaderMaterial;
 }
 
-// Inspect settings — desktop / landscape
+// Inspect settings — desktop / landscape (ortho: depth-free, scale carries the pop)
 const INSPECT_Z_DESKTOP = 3.2;
-const INSPECT_SCALE_DESKTOP = 1.45;
+const INSPECT_SCALE_DESKTOP = 1.35;
 const INSPECT_X_LANDSCAPE = -1.2;
 
 // Inspect settings — mobile / portrait (card fits with room for text below)
 const INSPECT_Z_MOBILE = 1.4;
-const INSPECT_SCALE_MOBILE = 1.4;
+const INSPECT_SCALE_MOBILE = 1.15;
 
 const INSPECT_TILT_Y = 0.45;       // max rad
 const INSPECT_TILT_X = 0.30;
 const LANDSCAPE_ASPECT = 1.15;     // viewport aspect threshold for landscape layout
 
+// Orthographic frustum heights — chosen to match the apparent card size that the
+// previous perspective camera produced (FOV 34°, z 8 / z 10).
+const ORTHO_HEIGHT_LANDSCAPE = 4.9;
+const ORTHO_HEIGHT_PORTRAIT = 6.2;
+
 export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
   // ---------- renderer / scene / camera ----------
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
   camera.position.set(0, 0, 8);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -75,9 +79,15 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
     const w = container.clientWidth || window.innerWidth;
     const h = container.clientHeight || window.innerHeight;
     renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    // Pull camera back on narrow / portrait viewports so cards aren't oversized on phones
-    camera.position.z = camera.aspect < LANDSCAPE_ASPECT ? 10 : 8;
+    const aspect = w / h;
+    // Taller frustum on portrait so cards aren't oversized on phones
+    const frustumH = aspect < LANDSCAPE_ASPECT ? ORTHO_HEIGHT_PORTRAIT : ORTHO_HEIGHT_LANDSCAPE;
+    const halfH = frustumH / 2;
+    const halfW = halfH * aspect;
+    camera.left = -halfW;
+    camera.right = halfW;
+    camera.top = halfH;
+    camera.bottom = -halfH;
     camera.updateProjectionMatrix();
   }
   resize();
@@ -132,7 +142,12 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
   let dragStartX = 0;
   let dragStartFocus = 0;
   let dragMoved = 0;
+  let autoScrollActive = true;
   let lastTime = performance.now();
+
+  function stopAutoScroll() {
+    autoScrollActive = false;
+  }
 
   const raycaster = new THREE.Raycaster();
   const ndc = new THREE.Vector2();
@@ -189,6 +204,7 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
 
   renderer.domElement.addEventListener('pointerdown', (e) => {
     updatePointer(e.clientX, e.clientY);
+    stopAutoScroll();
     if (inspectIndex !== -1) return; // ignore drag start while inspecting
     dragging = true;
     dragStartX = e.clientX;
@@ -203,7 +219,7 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
     const rect = renderer.domElement.getBoundingClientRect();
     const dx = e.clientX - dragStartX;
     dragMoved = Math.max(dragMoved, Math.abs(dx));
-    focusTarget = clamp(dragStartFocus - (dx / rect.width) * 6, 0, cards.length - 1);
+    focusTarget = dragStartFocus - (dx / rect.width) * 6;
   });
 
   renderer.domElement.addEventListener('pointerup', (e) => {
@@ -220,10 +236,12 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
       const idx = pickCardIndex(e.clientX, e.clientY);
       const focusInt = Math.round(focusIndex);
       if (idx === -1) return;
-      if (idx === focusInt) enterInspect(idx);
-      else focusTarget = idx;
+      // Compare mod N: the clicked card.index represents the same on-screen card
+      // as any focusInt that's congruent modulo cards.length.
+      if (mod(idx - focusInt, cards.length) === 0) enterInspect(idx);
+      else focusTarget = nearestEquivalent(idx, focusInt, cards.length);
     } else {
-      focusTarget = clamp(Math.round(focusTarget), 0, cards.length - 1);
+      focusTarget = Math.round(focusTarget);
     }
   });
 
@@ -233,23 +251,27 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
 
   renderer.domElement.addEventListener('wheel', (e) => {
     if (inspectIndex !== -1) return;
+    stopAutoScroll();
     e.preventDefault();
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    focusTarget = clamp(focusTarget + delta * 0.004, 0, cards.length - 1);
+    focusTarget = focusTarget + delta * 0.004;
   }, { passive: false });
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && inspectIndex !== -1) {
       exitInspect();
     } else if (inspectIndex === -1) {
-      if (e.key === 'ArrowRight') focusTarget = clamp(Math.round(focusTarget) + 1, 0, cards.length - 1);
-      else if (e.key === 'ArrowLeft') focusTarget = clamp(Math.round(focusTarget) - 1, 0, cards.length - 1);
-      else if (e.key === 'Enter') enterInspect(Math.round(focusIndex));
+      if (e.key === 'ArrowRight') { stopAutoScroll(); focusTarget = Math.round(focusTarget) + 1; }
+      else if (e.key === 'ArrowLeft') { stopAutoScroll(); focusTarget = Math.round(focusTarget) - 1; }
+      else if (e.key === 'Enter') { stopAutoScroll(); enterInspect(mod(Math.round(focusIndex), cards.length)); }
     }
   });
 
   // ---------- per-frame layout ----------
   function updateLayout(dt: number) {
+    if (autoScrollActive && inspectIndex === -1) {
+      focusTarget += AUTO_SCROLL_SPEED * dt;
+    }
     focusIndex = damp(focusIndex, focusTarget, 12, dt);
     const targetInspect = inspectIndex !== -1 ? 1 : 0;
     inspectAmt = damp(inspectAmt, targetInspect, 9, dt);
@@ -261,21 +283,21 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
     const inspectTargetZ = landscape ? INSPECT_Z_DESKTOP : INSPECT_Z_MOBILE;
     const inspectTargetScale = landscape ? INSPECT_SCALE_DESKTOP : INSPECT_SCALE_MOBILE;
 
+    const N = cards.length;
     for (const card of cards) {
-      const offset = card.index - focusIndex;
+      // Wrap the offset into [-N/2, +N/2] so cards loop around the focus.
+      // The "long way around" is suppressed: card N-1 with focus near 0 displays
+      // at offset -1 (left of focus), not +N-1 (far off-screen right).
+      const rawOffset = card.index - focusIndex;
+      const offset = mod(rawOffset + N / 2, N) - N / 2;
       const absOff = Math.abs(offset);
 
-      // ---- cover-flow stack layout ----
-      const stackX = offset * CARD_W * STACK_SPACING;
+      // Plain horizontal carousel: consistent spacing, no rotation, flat Z.
+      const stackX = offset * STACK_SPACING * CARD_W;
       const stackY = 0;
-      // Distant cards sit slightly back; focus pops forward
-      const focusBoost = Math.exp(-absOff * absOff * 1.2);
-      const stackZ = -absOff * STACK_Z_PER_OFFSET + focusBoost * FOCUS_Z_POP;
-      // Y-rotation: cards rotate around vertical axis to face toward focus.
-      // tanh easing → first neighbor noticeable, far ones approach the amplitude limit.
-      const stackRotY = -Math.tanh(offset * STACK_ROT_SHAPE) * STACK_ROT_AMPLITUDE;
-      // Subtle scale pop on focus
-      const stackScale = 1.0 + focusBoost * 0.10;
+      const stackZ = 0;
+      const stackRotY = 0;
+      const stackScale = 1.0;
       const stackFade = clamp(1 - (absOff - FADE_START) / (FADE_END - FADE_START), 0, 1);
 
       const isInspected = card.index === inspectIndex;
@@ -301,10 +323,9 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
         card.material.uniforms.uOpacity.value = op;
         card.material.uniforms.uInspectAmt.value = 0;
         card.material.visible = op > 0.01;
-        // Constant stacking: lower index renders on top.
-        // Focused card gets a small boost so it sits a step above its right neighbors.
-        const focusBonus = card.index === Math.round(focusIndex) ? 0.5 : 0;
-        card.mesh.renderOrder = -card.index + focusBonus;
+        // Closer to focus = on top, so the focused card sits above the cards
+        // peeking out on either side.
+        card.mesh.renderOrder = -absOff;
       }
     }
 
@@ -330,6 +351,7 @@ export function mountCards(container: HTMLElement, overlay: OverlayRefs) {
   // Dev-only: ?inspect=N auto-enters inspect mode (skipping damping) for screenshot testing
   const inspectParam = new URLSearchParams(window.location.search).get('inspect');
   if (inspectParam !== null) {
+    autoScrollActive = false;
     const idx = clamp(parseInt(inspectParam, 10) || 0, 0, cards.length - 1);
     focusIndex = idx;
     focusTarget = idx;
@@ -361,4 +383,13 @@ function lerp(a: number, b: number, t: number) {
 }
 function damp(a: number, b: number, lambda: number, dt: number) {
   return lerp(a, b, 1 - Math.exp(-lambda * dt));
+}
+// Math-mod (not JS %): handles negative dividends so the result is always in [0, n).
+function mod(a: number, n: number) {
+  return ((a % n) + n) % n;
+}
+// The representative of `target` modulo `n` that's closest to `anchor`. Used to
+// route focus animations the short way around the loop instead of unwinding.
+function nearestEquivalent(target: number, anchor: number, n: number) {
+  return anchor + (mod(target - anchor + n / 2, n) - n / 2);
 }
